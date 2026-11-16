@@ -9,6 +9,9 @@ import { Hero } from './sections/Hero'
 import { About } from './sections/About'
 import { Projects } from './sections/Projects'
 import { Lab } from './sections/Lab'
+import { Testimonials } from './sections/Testimonials'
+import { Timeline } from './sections/Timeline'
+import { Skills } from './sections/Skills'
 
 export default function App() {
   const { t } = useI18n()
@@ -29,7 +32,10 @@ export default function App() {
         <About />
         <Projects />
         <Lab />
-        {SECTIONS.filter((s) => !['inicio', 'sobre-mi', 'proyectos', 'lab'].includes(s.id)).map((s) => (
+        <Testimonials />
+        <Timeline />
+        <Skills />
+        {SECTIONS.filter((s) => !['inicio', 'sobre-mi', 'proyectos', 'lab', 'referencias', 'trayectoria', 'habilidades'].includes(s.id)).map((s) => (
           <section key={s.id} id={s.id} className="grid min-h-screen place-items-center">
             <h2 className="font-display text-6xl font-extrabold uppercase">{t.nav[s.key]}</h2>
           </section>
