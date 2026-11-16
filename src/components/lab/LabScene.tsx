@@ -35,14 +35,65 @@ const RADIUS = 2.7
 const TAU = Math.PI * 2
 
 /* ───────────── Pantalla que se enciende ───────────── */
-function Screen({ kind, name, on, children }: { kind: DeviceKind; name: string; on: boolean; children: (mat: ReactNode) => ReactNode }) {
-  const tex = useMemo(() => makeScreenTexture(kind, name), [kind, name])
+// Capturas reales como textura de pantalla (el reloj usa su pantalla generada)
+const SCREEN_IMAGES: Partial<Record<DeviceKind, { light: string; dark: string; aspect: number }>> = {
+  laptop: { light: '/proyectos/podcastcraft-light.webp', dark: '/proyectos/podcastcraft-dark.webp', aspect: 1.46 / 0.9 },
+  phone: { light: '/proyectos/autoclean-lavado-light.webp', dark: '/proyectos/autoclean-lavado-dark.webp', aspect: 0.58 / 1.2 },
+  cartridge: { light: '/proyectos/plomo-portada.webp', dark: '/proyectos/plomo-portada.webp', aspect: 0.8 / 0.62 },
+}
+const loader = new THREE.TextureLoader()
+
+/** Recorta la textura como `object-fit: cover` para la proporción de la pantalla */
+function cover(tex: THREE.Texture, planeAspect: number) {
+  const img = tex.image as { width: number; height: number }
+  const imgAspect = img.width / img.height
+  if (imgAspect > planeAspect) {
+    tex.repeat.set(planeAspect / imgAspect, 1)
+    tex.offset.set((1 - tex.repeat.x) / 2, 0)
+  } else {
+    tex.repeat.set(1, imgAspect / planeAspect)
+    tex.offset.set(0, 1 - tex.repeat.y)
+  }
+}
+
+function useScreenTexture(kind: DeviceKind, name: string, light: boolean) {
+  // Mientras carga la captura se usa la pantalla dibujada en canvas
+  const fallback = useMemo(() => makeScreenTexture(kind, name), [kind, name])
+  const [tex, setTex] = useState<THREE.Texture>(fallback)
+  const src = SCREEN_IMAGES[kind]
+  const url = src ? (light ? src.light : src.dark) : null
+
+  useEffect(() => {
+    if (!url || !src) return
+    let alive = true
+    let loaded: THREE.Texture | null = null
+    loader.load(url, (t) => {
+      loaded = t
+      if (!alive) return t.dispose()
+      t.colorSpace = THREE.SRGBColorSpace
+      t.anisotropy = 4
+      cover(t, src.aspect)
+      setTex(t)
+    })
+    return () => {
+      alive = false
+      loaded?.dispose()
+    }
+  }, [url, src])
+
+  useEffect(() => () => fallback.dispose(), [fallback])
+  return tex
+}
+
+function Screen({ kind, name, on, light, children }: { kind: DeviceKind; name: string; on: boolean; light: boolean; children: (mat: ReactNode) => ReactNode }) {
+  const tex = useScreenTexture(kind, name, light)
   const mat = useRef<THREE.MeshStandardMaterial>(null)
-  useEffect(() => () => tex.dispose(), [tex])
+  // Las capturas claras brillan menos para no quemarse en blanco
+  const glow = SCREEN_IMAGES[kind] ? 0.9 : 1.15
   useFrame((_, dt) => {
     const m = mat.current
     if (!m) return
-    const target = on ? 1.15 : 0
+    const target = on ? glow : 0
     m.emissiveIntensity += (target - m.emissiveIntensity) * Math.min(1, dt * 4)
     const c = on ? 1 : 0.06
     m.color.lerp(new THREE.Color(c, c, c), Math.min(1, dt * 4))
@@ -50,10 +101,53 @@ function Screen({ kind, name, on, children }: { kind: DeviceKind; name: string; 
   return (
     <>
       {children(
-        <meshStandardMaterial ref={mat} map={tex} emissiveMap={tex} emissive="#ffffff" emissiveIntensity={0} color="#111" roughness={0.35} toneMapped={false} />,
+        <meshStandardMaterial key={tex.uuid} ref={mat} map={tex} emissiveMap={tex} emissive="#ffffff" emissiveIntensity={0} color="#111" roughness={0.35} toneMapped={false} />,
       )}
     </>
   )
+}
+
+/* ───────────── Luz de neón en el piso, debajo del dispositivo encendido ───────────── */
+function NeonFloor({ on }: { on: boolean }) {
+  const ring = useRef<THREE.MeshBasicMaterial>(null)
+  const halo = useRef<THREE.MeshBasicMaterial>(null)
+  const lamp = useRef<THREE.PointLight>(null)
+  useFrame((state, dt) => {
+    const k = Math.min(1, dt * 3)
+    const flick = on ? 0.92 + Math.sin(state.clock.elapsedTime * 9) * 0.04 : 0
+    if (ring.current) ring.current.opacity += (flick - ring.current.opacity) * k
+    if (halo.current) halo.current.opacity += ((on ? 0.22 : 0) - halo.current.opacity) * k
+    if (lamp.current) lamp.current.intensity += ((on ? 3 : 0) - lamp.current.intensity) * k
+  })
+  return (
+    <group position={[0, -0.79, 0]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.62, 0.68, 64]} />
+        <meshBasicMaterial ref={ring} color="#ff3b4e" transparent opacity={0} toneMapped={false} depthWrite={false} />
+      </mesh>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.002, 0]}>
+        <circleGeometry args={[0.95, 48]} />
+        <meshBasicMaterial ref={halo} color="#ff3b4e" transparent opacity={0} toneMapped={false} depthWrite={false} blending={THREE.AdditiveBlending} />
+      </mesh>
+      <pointLight ref={lamp} color="#ff3b4e" intensity={0} distance={1.8} position={[0, 0.15, 0]} />
+    </group>
+  )
+}
+
+/* ───────────── Cámara: acercamiento suave al dispositivo encendido ───────────── */
+function CameraRig({ focus, mobile }: { focus: boolean; mobile: boolean }) {
+  const look = useRef(new THREE.Vector3(0, 0.2, 0))
+  const far = useMemo(() => new THREE.Vector3(0, 1.3, 6.4), [])
+  const near = useMemo(() => new THREE.Vector3(0, 1.05, mobile ? 5.9 : 5.45), [mobile])
+  const lookFar = useMemo(() => new THREE.Vector3(0, 0.2, 0), [])
+  const lookNear = useMemo(() => new THREE.Vector3(0, 0.15, 1.4), [])
+  useFrame(({ camera }, dt) => {
+    const k = Math.min(1, dt * 1.8)
+    camera.position.lerp(focus ? near : far, k)
+    look.current.lerp(focus ? lookNear : lookFar, k)
+    camera.lookAt(look.current)
+  })
+  return null
 }
 
 /* ───────────── Dispositivos hechos con geometría ───────────── */
@@ -74,7 +168,7 @@ function Laptop({ on, name, light }: { on: boolean; name: string; light: boolean
         <RoundedBox args={[1.6, 1.02, 0.05]} radius={0.03} position={[0, 0.51, 0]}>
           {light ? shellLight : shell}
         </RoundedBox>
-        <Screen kind="laptop" name={name} on={on}>
+        <Screen kind="laptop" name={name} on={on} light={light}>
           {(m) => (
             <mesh position={[0, 0.52, 0.027]}>
               <planeGeometry args={[1.46, 0.9]} />
@@ -93,7 +187,7 @@ function Phone({ on, name, light }: { on: boolean; name: string; light: boolean 
       <RoundedBox args={[0.66, 1.32, 0.08]} radius={0.07} smoothness={4}>
         {light ? shellLight : shell}
       </RoundedBox>
-      <Screen kind="phone" name={name} on={on}>
+      <Screen kind="phone" name={name} on={on} light={light}>
         {(m) => (
           <mesh position={[0, 0, 0.042]}>
             <planeGeometry args={[0.58, 1.2]} />
@@ -125,7 +219,7 @@ function WatchDevice({ on, name, light }: { on: boolean; name: string; light: bo
           <meshStandardMaterial color="#3a3034" metalness={0.7} roughness={0.3} />
         </mesh>
       ))}
-      <Screen kind="watch" name={name} on={on}>
+      <Screen kind="watch" name={name} on={on} light={light}>
         {(m) => (
           <mesh position={[0, 0, 0.082]}>
             <circleGeometry args={[0.42, 48]} />
@@ -155,7 +249,7 @@ function Cartridge({ on, name, light }: { on: boolean; name: string; light: bool
         <boxGeometry args={[0.7, 0.08, 0.06]} />
         <meshStandardMaterial color="#c9a227" metalness={0.9} roughness={0.25} />
       </mesh>
-      <Screen kind="cartridge" name={name} on={on}>
+      <Screen kind="cartridge" name={name} on={on} light={light}>
         {(m) => (
           <mesh position={[0, -0.04, 0.102]}>
             <planeGeometry args={[0.8, 0.62]} />
@@ -249,6 +343,7 @@ function DeviceSlot({
 
   return (
     <group position={pos} rotation={[0, a, 0]}>
+      <NeonFloor on={on} />
       <group
         ref={ref}
         onClick={(e: ThreeEvent<MouseEvent>) => {
@@ -265,7 +360,7 @@ function DeviceSlot({
         {on && <Sparks />}
         {on && <pointLight color="#ff3b4e" intensity={4} distance={2.5} position={[0, 0.2, 0.6]} />}
         {on && selected && (
-          <Html position={[0, 1.05, 0]} center distanceFactor={3.6} zIndexRange={[20, 0]}>
+          <Html position={[0, 1.05, 0]} center distanceFactor={2.7} zIndexRange={[20, 0]}>
             <div className="glass pointer-events-auto flex w-max items-center gap-3 rounded-2xl px-3 py-2 shadow-soft">
               <span className="font-display text-sm font-extrabold whitespace-nowrap text-ink">{device.name}</span>
               <button
@@ -357,7 +452,10 @@ function Carousel(props: LabSceneProps & { dragRef: RefObject<DragState> }) {
 }
 
 export default function LabScene(props: LabSceneProps & { mobile: boolean; active: boolean }) {
-  const { mobile, light, onInteract, active } = props
+  const { mobile, light, onInteract, active, powered, selected, autoRotate } = props
+  const [dragging, setDragging] = useState(false)
+  // Acerca la cámara cuando el dispositivo de frente está encendido y nadie está girando el carrusel
+  const focus = powered[selected] && !autoRotate && !dragging
   const dragRef = useRef<DragState>({ dragging: false, vel: 0, dx: 0, moved: 0 })
   const lastX = useRef(0)
 
@@ -366,6 +464,7 @@ export default function LabScene(props: LabSceneProps & { mobile: boolean; activ
       className="absolute inset-0 touch-pan-y"
       onPointerDown={(e) => {
         dragRef.current.dragging = true
+        setDragging(true)
         dragRef.current.vel = 0
         dragRef.current.moved = 0
         lastX.current = e.clientX
@@ -378,9 +477,18 @@ export default function LabScene(props: LabSceneProps & { mobile: boolean; activ
         dragRef.current.dx += dx * 0.006
         dragRef.current.moved += Math.abs(dx)
       }}
-      onPointerUp={() => (dragRef.current.dragging = false)}
-      onPointerLeave={() => (dragRef.current.dragging = false)}
-      onPointerCancel={() => (dragRef.current.dragging = false)}
+      onPointerUp={() => {
+        dragRef.current.dragging = false
+        setDragging(false)
+      }}
+      onPointerLeave={() => {
+        dragRef.current.dragging = false
+        setDragging(false)
+      }}
+      onPointerCancel={() => {
+        dragRef.current.dragging = false
+        setDragging(false)
+      }}
     >
       <Canvas
         dpr={mobile ? [1, 1.5] : [1, 2]}
@@ -389,6 +497,7 @@ export default function LabScene(props: LabSceneProps & { mobile: boolean; activ
         frameloop={active ? 'always' : 'never'}
         onCreated={({ camera }) => camera.lookAt(0, 0.2, 0)}
       >
+        <CameraRig focus={focus} mobile={mobile} />
         <ambientLight intensity={light ? 1 : 0.75} />
         <hemisphereLight args={['#ffffff', '#ff3b4e', light ? 0.6 : 0.35]} />
         <directionalLight position={[3, 5, 4]} intensity={light ? 1.6 : 1.5} />
