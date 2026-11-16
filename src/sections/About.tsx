@@ -1,6 +1,6 @@
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
-import { Accessibility, GraduationCap, Heart, Languages, Layers, MapPin, Sparkles } from 'lucide-react'
-import { useRef } from 'react'
+import { BadgeCheck, Gamepad2, Goal, GraduationCap, Layers, ListChecks, MapPin } from 'lucide-react'
+import { Fragment, useRef } from 'react'
 import { tools, type ToolStatus } from '../data/content'
 import { useI18n } from '../i18n/I18nProvider'
 import { useReducedMotion } from '../lib/hooks'
@@ -43,7 +43,7 @@ function ScrollStatement({ text }: { text: string }) {
     <p ref={ref} aria-hidden="true" className="font-display text-[clamp(1.6rem,4vw,3rem)] leading-[1.12] font-extrabold tracking-tight">
       {words.map((w, i) => {
         const start = i / words.length
-        const accent = /^(Pasto|instalar|computador|celular|reloj|juego\.?|computer|phone|watch|game\.?|install:?)[,.:]?$/i.test(w)
+        const accent = /^(videojuegos|games|programar|code,?|software|punta|end)[,.:]?$/i.test(w)
         return <ScrollWord key={i} word={w} accent={accent} progress={scrollYProgress} range={[start, start + 1 / words.length]} />
       })}
     </p>
@@ -51,15 +51,40 @@ function ScrollStatement({ text }: { text: string }) {
   )
 }
 
+/** Bandera de Colombia en SVG (Windows no dibuja los emojis de banderas) */
+function FlagCO() {
+  return (
+    <svg viewBox="0 0 6 4" width="18" height="12" className="ml-0.5 inline-block rounded-[2px] align-[-1px]" aria-hidden="true">
+      <rect width="6" height="2" fill="#FCD116" />
+      <rect y="2" width="6" height="1" fill="#003893" />
+      <rect y="3" width="6" height="1" fill="#CE1126" />
+    </svg>
+  )
+}
+
+/** Convierte **texto** en <strong> */
+function rich(text: string) {
+  return text.split(/\*\*(.+?)\*\*/g).map((part, i) =>
+    i % 2 ? (
+      <strong key={i} className="font-semibold text-ink">
+        {part}
+      </strong>
+    ) : (
+      <Fragment key={i}>{part}</Fragment>
+    ),
+  )
+}
+
 export function About() {
   const { t, f, l } = useI18n()
-  const info = [
-    { icon: MapPin, ...t.about.cards.location },
-    { icon: GraduationCap, ...t.about.cards.education },
-    { icon: Heart, ...t.about.cards.passions },
-    { icon: Languages, ...t.about.cards.languages },
+  const cards = t.about.cards
+  const info: { icon: typeof MapPin; label: string; value: string; note?: string }[] = [
+    { icon: MapPin, ...cards.location },
+    { icon: GraduationCap, ...cards.education },
+    { icon: Goal, ...cards.football },
+    { icon: Gamepad2, ...cards.offline },
   ]
-  const focusIcons = [Layers, Accessibility, Sparkles]
+  const focusIcons = [Layers, ListChecks, BadgeCheck]
 
   return (
     <section id="sobre-mi" aria-labelledby="about-title" className="relative py-24 md:py-32">
@@ -77,7 +102,7 @@ export function About() {
               <article className={`${card} flex h-full flex-col justify-between gap-8 p-7 md:p-9`}>
                 <div>
                   <p className="kicker mb-4">{t.about.bioTitle}</p>
-                  <p className="text-[1.05rem] leading-relaxed text-ink/90">{t.about.bio}</p>
+                  <p className="text-[1.05rem] leading-relaxed text-ink/90">{rich(t.about.bio)}</p>
                 </div>
                 <Signature width={210} duration={1.8} className="max-w-full text-primary-text" />
               </article>
@@ -93,6 +118,11 @@ export function About() {
                   <div>
                     <h3 className="font-mono text-xs tracking-widest text-muted uppercase">{c.label}</h3>
                     <p className="mt-1.5 font-semibold leading-snug">{c.value}</p>
+                    {c.note && (
+                      <p className="mt-2 text-sm leading-snug text-muted">
+                        {c.note} <FlagCO />
+                      </p>
+                    )}
                   </div>
                 </div>
               </TiltCard>
@@ -154,8 +184,8 @@ export function About() {
               >
                 <span className="font-mono text-[11px] tracking-widest text-muted uppercase">{l(tool.category)}</span>
                 <span className="font-semibold leading-snug">{tool.name}</span>
-                <span className={`mt-auto w-fit rounded-full border px-2.5 py-0.5 text-[11px] font-medium ${statusStyle[tool.status]}`}>
-                  {t.skills.levels[tool.status]}
+                <span className="mt-auto text-sm leading-snug text-muted">
+                  <span className="font-medium text-primary-text">{t.about.usedIn}:</span> {l(tool.usedIn)}
                 </span>
               </motion.li>
             ))}

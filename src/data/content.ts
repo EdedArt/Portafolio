@@ -43,26 +43,33 @@ export const marquee = [
 ]
 
 /* ───────────── Herramientas (Sobre mí) ───────────── */
-export type ToolStatus = 'production' | 'projects' | 'learning'
 export interface Tool {
   name: string
   category: L
-  status: ToolStatus
+  /** Dónde la he usado */
+  usedIn: L
 }
 
+const tool = (category: L, name: string, usedIn: L): Tool => ({ name, category, usedIn })
+const COURSES: L = { es: 'Proyectos de la carrera', en: 'University projects' }
+
 export const tools: Tool[] = [
-  { name: 'JavaScript / TypeScript', category: { es: 'Core', en: 'Core' }, status: 'production' },
-  { name: 'React Native + Expo', category: { es: 'Móvil', en: 'Mobile' }, status: 'production' },
-  { name: 'Electron', category: { es: 'Escritorio', en: 'Desktop' }, status: 'production' },
-  { name: 'Node.js + Express', category: { es: 'Backend', en: 'Backend' }, status: 'production' },
-  { name: 'Unity + C#', category: { es: 'Juegos', en: 'Games' }, status: 'projects' },
-  { name: 'Monkey C / Connect IQ', category: { es: 'Wearables', en: 'Wearables' }, status: 'production' },
-  { name: 'Google Gemini API', category: { es: 'IA', en: 'AI' }, status: 'production' },
-  { name: 'OpenAI API', category: { es: 'IA', en: 'AI' }, status: 'projects' },
-  { name: 'Prisma + SQLite', category: { es: 'Datos', en: 'Data' }, status: 'projects' },
-  { name: 'Tailwind CSS', category: { es: 'UI', en: 'UI' }, status: 'production' },
-  { name: 'Vite + Vitest', category: { es: 'Herramientas', en: 'Tooling' }, status: 'projects' },
-  { name: 'Git + GitHub', category: { es: 'Entrega', en: 'Delivery' }, status: 'production' },
+  tool({ es: 'Core', en: 'Core' }, 'JavaScript / TypeScript', { es: 'PodcastCraft AI, AutoClean AI y este portafolio', en: 'PodcastCraft AI, AutoClean AI and this portfolio' }),
+  tool({ es: 'Frontend', en: 'Frontend' }, 'React + Next.js', { es: 'Pasión Nariño y este portafolio', en: 'Pasión Nariño and this portfolio' }),
+  tool({ es: 'Móvil', en: 'Mobile' }, 'React Native + Expo', { es: 'AutoClean AI', en: 'AutoClean AI' }),
+  tool({ es: 'Escritorio', en: 'Desktop' }, 'Electron', { es: 'PodcastCraft AI', en: 'PodcastCraft AI' }),
+  tool({ es: 'Backend', en: 'Backend' }, 'Node.js + Express', { es: 'AutoClean AI y PodcastCraft AI', en: 'AutoClean AI and PodcastCraft AI' }),
+  tool({ es: 'Backend', en: 'Backend' }, 'NestJS', { es: 'PetCare', en: 'PetCare' }),
+  tool({ es: 'Datos', en: 'Data' }, 'PostgreSQL', { es: 'PetCare', en: 'PetCare' }),
+  tool({ es: 'Datos', en: 'Data' }, 'Prisma + SQLite', { es: 'AutoClean AI', en: 'AutoClean AI' }),
+  tool({ es: 'Lenguaje', en: 'Language' }, 'Java', COURSES),
+  tool({ es: 'Backend', en: 'Backend' }, 'Python + Django', COURSES),
+  tool({ es: 'Juegos', en: 'Games' }, 'Unity + C#', { es: 'Plomo y Paja', en: 'Plomo y Paja' }),
+  tool({ es: 'Wearables', en: 'Wearables' }, 'Monkey C / Connect IQ', { es: 'ElderGuard AI', en: 'ElderGuard AI' }),
+  tool({ es: 'IA', en: 'AI' }, 'Google Gemini API', { es: 'PodcastCraft, AutoClean y ElderGuard', en: 'PodcastCraft, AutoClean and ElderGuard' }),
+  tool({ es: 'IA', en: 'AI' }, 'OpenAI API', { es: 'Plomo y Paja', en: 'Plomo y Paja' }),
+  tool({ es: 'UI', en: 'UI' }, 'Tailwind CSS', { es: 'PodcastCraft AI y este portafolio', en: 'PodcastCraft AI and this portfolio' }),
+  tool({ es: 'Entrega', en: 'Delivery' }, 'Git + GitHub', { es: 'Todos mis proyectos', en: 'All my projects' }),
 ]
 
 /* ───────────── Proyectos ───────────── */
@@ -508,6 +515,7 @@ export const education = {
 }
 
 /* ───────────── Habilidades ───────────── */
+export type ToolStatus = 'production' | 'projects' | 'learning'
 export interface SkillItem {
   name: string
   level: ToolStatus
