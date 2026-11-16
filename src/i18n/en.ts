@@ -197,20 +197,15 @@ export const en: Dict = {
     kicker: '06 — Skills',
     title: 'SKILLS',
     titleAccent: '& achievements',
-    subtitle: 'I used every technology on this list in at least one of my published projects.',
+    subtitle: "The technologies I work with and where I've used them.",
     tabsLabel: 'Skill categories',
     tabs: {
       stack: 'Stack & skills',
       languages: 'Languages',
       achievements: 'Achievements',
     },
-    flipHint: 'Hover or tap to see where I used it',
-    usedIn: 'Where I used it',
-    levels: {
-      production: 'In production',
-      projects: 'In projects',
-      learning: 'Learning',
-    },
+    flipHint: "Hover or tap to see where I've used it",
+    usedIn: "Where I've used it",
   },
   contact: {
     kicker: '07 — Contact',

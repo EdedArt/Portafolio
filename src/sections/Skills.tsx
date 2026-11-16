@@ -5,7 +5,6 @@ import { achievements, skillGroups, spokenLanguages, type AchievementIcon, type 
 import { useI18n } from '../i18n/I18nProvider'
 import { useFinePointer, useReducedMotion } from '../lib/hooks'
 import { SectionHeading, card } from '../components/ui/motion'
-import { statusStyle } from './About'
 
 type Tab = 'stack' | 'languages' | 'achievements'
 const TABS: Tab[] = ['stack', 'languages', 'achievements']
@@ -32,7 +31,7 @@ function FlipCard({ group, index }: { group: SkillGroup; index: number }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08 }}
-      className="h-[340px]"
+      className="h-[360px]"
       style={{ perspective: 1200 }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -45,11 +44,10 @@ function FlipCard({ group, index }: { group: SkillGroup; index: number }) {
         <div className={`${card} absolute inset-0 flex flex-col p-6 [backface-visibility:hidden]`} aria-hidden={isFlipped}>
           <span className="font-mono text-xs text-muted">0{index + 1}</span>
           <h3 className="mt-2 font-display text-2xl font-extrabold">{l(group.title)}</h3>
-          <ul className="mt-5 space-y-2.5">
+          <ul className="mt-5 flex flex-wrap gap-1.5">
             {group.items.map((it) => (
-              <li key={it.name} className="flex items-center justify-between gap-2 text-sm">
-                <span className="font-medium">{it.name}</span>
-                <span className={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium ${statusStyle[it.level]}`}>{t.skills.levels[it.level]}</span>
+              <li key={it} className="rounded-full border border-line-strong bg-surface-2/60 px-2.5 py-1 text-[13px] font-medium">
+                {it}
               </li>
             ))}
           </ul>
@@ -59,7 +57,7 @@ function FlipCard({ group, index }: { group: SkillGroup; index: number }) {
             aria-controls={backId}
             aria-expanded={isFlipped}
             tabIndex={isFlipped ? -1 : 0}
-            className="mt-auto flex items-center gap-1.5 self-start rounded-full text-xs font-medium text-primary-text"
+            className="mt-auto flex items-center gap-1.5 self-start rounded-full pt-4 text-left text-xs font-medium text-primary-text"
           >
             <RefreshCw size={13} aria-hidden="true" /> {t.skills.flipHint}
           </button>
@@ -160,7 +158,7 @@ export function Skills() {
             className="rounded-3xl"
           >
             {tab === 'stack' && (
-              <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <ul className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                 {skillGroups.map((g, i) => (
                   <FlipCard key={i} group={g} index={i} />
                 ))}

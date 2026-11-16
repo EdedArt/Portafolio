@@ -198,20 +198,15 @@ export const es = {
     kicker: '06 — Habilidades',
     title: 'HABILIDADES',
     titleAccent: 'y logros',
-    subtitle: 'Cada tecnología de esta lista la usé en al menos uno de mis proyectos publicados.',
+    subtitle: 'Las tecnologías con las que trabajo y dónde las he usado.',
     tabsLabel: 'Categorías de habilidades',
     tabs: {
       stack: 'Stack y habilidades',
       languages: 'Idiomas',
       achievements: 'Logros',
     },
-    flipHint: 'Pasa el mouse o toca para ver dónde la usé',
-    usedIn: 'Dónde la usé',
-    levels: {
-      production: 'En producción',
-      projects: 'En proyectos',
-      learning: 'Aprendiendo',
-    },
+    flipHint: 'Pasa el mouse o toca para ver dónde lo he usado',
+    usedIn: 'Dónde lo he usado',
   },
   contact: {
     kicker: '07 — Contacto',

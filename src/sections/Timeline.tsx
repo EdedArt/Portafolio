@@ -1,5 +1,5 @@
 import { motion, useScroll, useSpring } from 'framer-motion'
-import { Award, Briefcase, CalendarDays, GraduationCap, Rocket, Shield, Check } from 'lucide-react'
+import { Award, BookOpen, Briefcase, Check, Gamepad2, GraduationCap, Rocket } from 'lucide-react'
 import { useRef } from 'react'
 import { education, timeline, type TimelineKind } from '../data/content'
 import { useI18n } from '../i18n/I18nProvider'
@@ -7,12 +7,12 @@ import { useReducedMotion } from '../lib/hooks'
 import { FadeIn, SectionHeading, card } from '../components/ui/motion'
 
 const icons: Record<TimelineKind, typeof Rocket> = {
-  projects: Rocket,
   degree: GraduationCap,
-  course: Shield,
-  events: CalendarDays,
+  projects: Rocket,
   work: Briefcase,
+  training: BookOpen,
   graduated: Award,
+  origin: Gamepad2,
 }
 
 export function Timeline() {
@@ -38,10 +38,14 @@ export function Timeline() {
             />
             {timeline.map((item, i) => {
               const Icon = icons[item.kind]
+              // "El origen" lleva nodo rojo sólido y tarjeta destacada
+              const origin = item.kind === 'origin'
               return (
                 <li key={i} className="relative">
                   <motion.span
-                    className="absolute top-1 -left-14 grid size-10 place-items-center rounded-full border-2 border-primary bg-surface text-primary-text shadow-soft md:-left-16 md:size-12"
+                    className={`absolute top-1 -left-14 grid size-10 place-items-center rounded-full border-2 border-primary shadow-soft md:-left-16 md:size-12 ${
+                      origin ? 'bg-primary text-on-primary shadow-[0_0_24px_-2px_var(--primary)]' : 'bg-surface text-primary-text'
+                    }`}
                     initial={reduce ? false : { rotateY: -180, scale: 0.4, opacity: 0 }}
                     whileInView={{ rotateY: 0, scale: 1, opacity: 1 }}
                     viewport={{ once: true, margin: '0px 0px -20% 0px' }}
@@ -51,7 +55,7 @@ export function Timeline() {
                     <Icon size={18} />
                   </motion.span>
                   <motion.article
-                    className={`${card} p-6`}
+                    className={`${card} p-6 ${origin ? 'border-primary/40 bg-gradient-to-br from-primary/10 to-transparent' : ''}`}
                     initial={reduce ? false : { opacity: 0, x: 40, rotateY: -12 }}
                     whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
                     viewport={{ once: true, margin: '0px 0px -15% 0px' }}

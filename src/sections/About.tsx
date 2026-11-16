@@ -1,18 +1,12 @@
 import { motion, useScroll, useTransform, type MotionValue } from 'framer-motion'
 import { BadgeCheck, Gamepad2, Goal, GraduationCap, Layers, ListChecks, MapPin } from 'lucide-react'
 import { Fragment, useRef } from 'react'
-import { tools, type ToolStatus } from '../data/content'
+import { tools } from '../data/content'
 import { useI18n } from '../i18n/I18nProvider'
 import { useReducedMotion } from '../lib/hooks'
 import { useTheme } from '../theme/ThemeProvider'
 import { FadeIn, SectionHeading, TiltCard, card } from '../components/ui/motion'
 import { Signature } from '../components/Signature'
-
-export const statusStyle: Record<ToolStatus, string> = {
-  production: 'bg-primary/10 text-primary-text border-primary/25',
-  projects: 'bg-surface-2 text-ink border-line-strong',
-  learning: 'bg-transparent text-muted border-dashed border-line-strong',
-}
 
 // Colores "apagados" con contraste ≥ 3:1 (texto grande) para cumplir WCAG AA aun sin iluminar
 const DIM = { light: ['#8f8486', '#17110f'], dark: ['#7a6e70', '#f6efef'] } as const

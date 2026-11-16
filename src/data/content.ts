@@ -456,7 +456,7 @@ export const testimonials: Testimonial[] = [
 ]
 
 /* ───────────── Trayectoria ───────────── */
-export type TimelineKind = 'projects' | 'degree' | 'course' | 'events' | 'work' | 'graduated'
+export type TimelineKind = 'degree' | 'projects' | 'work' | 'training' | 'graduated' | 'origin'
 export interface TimelineItem {
   kind: TimelineKind
   date: L
@@ -466,64 +466,70 @@ export interface TimelineItem {
   text?: L
 }
 
+const NOW: L = { es: 'Actualidad', en: 'Present' }
+const EXPERIENCE: L = { es: 'Experiencia', en: 'Experience' }
+
 export const timeline: TimelineItem[] = [
   {
-    kind: 'projects',
-    date: { es: '2026 · Presente', en: '2026 · Present' },
-    tag: { es: 'PROYECTOS', en: 'PROJECTS' },
-    title: { es: 'Cuatro apps publicadas con instalador', en: 'Four apps shipped with an installer' },
-    place: { es: 'Diseño de Interfaces de Software, UCC', en: 'Software Interface Design, UCC' },
-    text: {
-      es: 'PodcastCraft AI, AutoClean AI, ElderGuard AI y Plomo y Paja: escritorio, móvil, smartwatch y videojuego.',
-      en: 'PodcastCraft AI, AutoClean AI, ElderGuard AI and Plomo y Paja: desktop, mobile, smartwatch and video game.',
-    },
-  },
-  {
     kind: 'degree',
-    date: { es: '2024 · Presente', en: '2024 · Present' },
+    date: NOW,
     tag: { es: 'PREGRADO', en: 'DEGREE' },
     title: { es: 'Ingeniería de Software · 5.º semestre', en: 'Software Engineering · 5th semester' },
-    place: {
-      es: 'Universidad Cooperativa de Colombia, sede Pasto',
-      en: 'Universidad Cooperativa de Colombia, Pasto campus',
-    },
+    place: { es: 'Universidad Cooperativa de Colombia, sede Pasto', en: 'Universidad Cooperativa de Colombia, Pasto campus' },
     text: {
-      es: 'Programación, bases de datos, arquitectura de software, diseño de interfaces y metodologías ágiles.',
-      en: 'Programming, databases, software architecture, interface design and agile methodologies.',
+      es: 'Arquitectura de software, bases de datos, diseño de interfaces y computación en la nube.',
+      en: 'Software architecture, databases, interface design and cloud computing.',
     },
   },
   {
-    kind: 'course',
-    date: { es: '2026 · En curso', en: '2026 · In progress' },
-    tag: { es: 'FORMACIÓN', en: 'TRAINING' },
-    title: { es: 'Curso de ciberseguridad', en: 'Cybersecurity course' },
+    kind: 'projects',
+    date: NOW,
+    tag: { es: 'PROYECTOS', en: 'PROJECTS' },
+    title: { es: 'Software multiplataforma', en: 'Multiplatform software' },
     text: {
-      es: 'Fundamentos de seguridad aplicados al desarrollo de software.',
-      en: 'Security fundamentals applied to software development.',
-    },
-  },
-  {
-    kind: 'events',
-    date: { es: 'Durante la carrera', en: 'During my degree' },
-    tag: { es: 'EVENTOS', en: 'EVENTS' },
-    title: { es: '4 seminarios de Ingeniería de Software', en: '4 Software Engineering seminars' },
-    text: {
-      es: 'Además de conferencias y charlas de tecnología.',
-      en: 'Plus technology conferences and talks.',
+      es: 'Apps publicadas para escritorio (Electron), móvil (Expo), Garmin (Connect IQ) y un videojuego en Unity, todas con instalador.',
+      en: 'Published apps for desktop (Electron), mobile (Expo), Garmin (Connect IQ) and a Unity video game, all with an installer.',
     },
   },
   {
     kind: 'work',
-    date: { es: 'Antes y durante la carrera', en: 'Before and during my degree' },
-    tag: { es: 'EXPERIENCIA', en: 'EXPERIENCE' },
-    title: { es: 'Atención al público', en: 'Customer service' },
-    place: {
-      es: 'Droguería Novasalud (regencia de farmacia) y Pasión Nariño',
-      en: 'Droguería Novasalud (pharmacy) and Pasión Nariño',
-    },
+    date: EXPERIENCE,
+    tag: { es: 'PASIÓN NARIÑO', en: 'PASIÓN NARIÑO' },
+    title: { es: 'Asesor de viajes y desarrollo frontend', en: 'Travel advisor and frontend development' },
+    place: { es: 'Agencia de viajes', en: 'Travel agency' },
     text: {
-      es: 'Atención al cliente, apoyo administrativo e inventario.',
-      en: 'Customer service, administrative support and inventory.',
+      es: 'Reservas de hoteles, armado de itinerarios y atención a clientes. En paralelo, desarrollo de interfaces con React y Next.js.',
+      en: 'Hotel bookings, itinerary planning and customer service. In parallel, building interfaces with React and Next.js.',
+    },
+  },
+  {
+    kind: 'work',
+    date: EXPERIENCE,
+    tag: { es: 'INDEPENDIENTE', en: 'FREELANCE' },
+    title: { es: 'Proyectos de software para droguería', en: 'Software projects for a drugstore' },
+    text: {
+      es: 'Soluciones de software a la medida, trabajando en equipo.',
+      en: 'Custom software solutions, built as part of a team.',
+    },
+  },
+  {
+    kind: 'work',
+    date: EXPERIENCE,
+    tag: { es: 'DROGUERÍA NOVASALUD', en: 'DROGUERÍA NOVASALUD' },
+    title: { es: 'Regencia de farmacia', en: 'Pharmacy operations' },
+    text: {
+      es: 'Atención al público, apoyo administrativo e inventario de medicamentos.',
+      en: 'Customer service, administrative support and medication inventory.',
+    },
+  },
+  {
+    kind: 'training',
+    date: { es: 'Formación', en: 'Training' },
+    tag: { es: 'FORMACIÓN', en: 'TRAINING' },
+    title: { es: 'Ciberseguridad, seminarios y conferencias', en: 'Cybersecurity, seminars and conferences' },
+    text: {
+      es: 'Curso de ciberseguridad (en curso) · 4 seminarios de Ingeniería de Software · Conferencias de tecnología.',
+      en: 'Cybersecurity course (in progress) · 4 Software Engineering seminars · Technology conferences.',
     },
   },
   {
@@ -531,9 +537,16 @@ export const timeline: TimelineItem[] = [
     date: { es: '7 de diciembre de 2023', en: 'December 7, 2023' },
     tag: { es: 'GRADUADO', en: 'GRADUATED' },
     title: { es: 'Bachiller Académico', en: 'High school diploma' },
-    place: {
-      es: 'Institución Educativa Municipal Libertad, Pasto',
-      en: 'Institución Educativa Municipal Libertad, Pasto',
+    place: { es: 'Institución Educativa Municipal Libertad, Pasto', en: 'Institución Educativa Municipal Libertad, Pasto' },
+  },
+  {
+    kind: 'origin',
+    date: { es: 'A los 10 años', en: 'At age 10' },
+    tag: { es: 'EL ORIGEN', en: 'THE ORIGIN' },
+    title: { es: 'El sueño de crear videojuegos', en: 'The dream of making video games' },
+    text: {
+      es: 'Jugando descubrí que detrás de cada detalle había código. Ahí decidí que quería programar.',
+      en: 'Playing games, I found out there was code behind every detail. That is when I decided I wanted to program.',
     },
   },
 ]
@@ -543,121 +556,89 @@ export const education = {
   school: { es: 'Universidad Cooperativa de Colombia, campus Pasto', en: 'Universidad Cooperativa de Colombia, Pasto campus' },
   period: { es: '2024 – en curso (5.º semestre)', en: '2024 – present (5th semester)' },
   bullets: {
-    es: [
-      '4 apps publicadas con instalador',
-      'App propia funcionando en un reloj Garmin',
-      '4 seminarios de Ingeniería de Software',
-      'Curso de ciberseguridad en curso',
-    ],
-    en: [
-      '4 apps shipped with an installer',
-      'My own app running on a Garmin watch',
-      '4 Software Engineering seminars',
-      'Cybersecurity course in progress',
-    ],
+    es: ['Arquitectura de software y diseño de APIs', 'Desarrollo multiplataforma', 'Computación en la nube (AWS)', 'Curso de ciberseguridad en curso'],
+    en: ['Software architecture and API design', 'Multiplatform development', 'Cloud computing (AWS)', 'Cybersecurity course in progress'],
   } as LList,
 }
 
 /* ───────────── Habilidades ───────────── */
-export type ToolStatus = 'production' | 'projects' | 'learning'
-export interface SkillItem {
-  name: string
-  level: ToolStatus
-}
 export interface SkillGroup {
   title: L
-  items: SkillItem[]
-  /** Reverso de la tarjeta: en qué proyecto la usé */
+  items: string[]
+  /** Reverso de la tarjeta: dónde lo he usado */
   usedIn: LList
 }
 
 export const skillGroups: SkillGroup[] = [
   {
-    title: { es: 'Web y Frontend', en: 'Web & Frontend' },
-    items: [
-      { name: 'HTML / CSS / JavaScript', level: 'production' },
-      { name: 'TypeScript', level: 'production' },
-      { name: 'Tailwind CSS', level: 'production' },
-      { name: 'Vite', level: 'projects' },
-    ],
+    title: { es: 'Frontend', en: 'Frontend' },
+    items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Vite'],
     usedIn: {
       es: [
-        'PodcastCraft AI: interfaz en HTML, JS y Tailwind',
-        'AutoClean AI: app y backend en TypeScript',
+        'Pasión Nariño: interfaces con React y Next.js',
+        'Este portafolio: React, TypeScript, Tailwind y Vite',
+        'PodcastCraft AI: interfaz con Tailwind CSS',
         'ElderGuard AI: simulador web con Vite',
-        'Este portafolio: React + Tailwind',
       ],
       en: [
-        'PodcastCraft AI: UI in HTML, JS and Tailwind',
-        'AutoClean AI: app and backend in TypeScript',
+        'Pasión Nariño: interfaces with React and Next.js',
+        'This portfolio: React, TypeScript, Tailwind and Vite',
+        'PodcastCraft AI: UI with Tailwind CSS',
         'ElderGuard AI: web simulator with Vite',
-        'This portfolio: React + Tailwind',
       ],
     },
   },
   {
-    title: { es: 'Móvil y Wearables', en: 'Mobile & Wearables' },
-    items: [
-      { name: 'React Native + Expo', level: 'production' },
-      { name: 'Monkey C / Connect IQ', level: 'production' },
-      { name: 'Wear OS (Kotlin)', level: 'learning' },
-    ],
+    title: { es: 'Backend y datos', en: 'Backend & data' },
+    items: ['Node.js', 'Express', 'NestJS', 'PostgreSQL', 'Prisma', 'SQLite', 'Java', 'Python + Django'],
+    usedIn: {
+      es: [
+        'AutoClean AI: API en Express con Prisma + SQLite, desplegada en Render',
+        'PetCare: API en NestJS con PostgreSQL',
+        'PodcastCraft AI: servicios locales en Node.js',
+        'Java y Python + Django: proyectos de la carrera',
+      ],
+      en: [
+        'AutoClean AI: Express API with Prisma + SQLite, deployed on Render',
+        'PetCare: NestJS API with PostgreSQL',
+        'PodcastCraft AI: local services in Node.js',
+        'Java and Python + Django: university projects',
+      ],
+    },
+  },
+  {
+    title: { es: 'Móvil, escritorio y wearables', en: 'Mobile, desktop & wearables' },
+    items: ['React Native + Expo', 'Electron', 'Monkey C / Connect IQ', 'Wear OS'],
     usedIn: {
       es: [
         'AutoClean AI: app Android con Expo y EAS Build',
-        'ElderGuard AI: app en un Garmin Forerunner 165',
-        'ElderGuard AI: versión de respaldo en Wear OS',
+        'PodcastCraft AI: app de escritorio con Electron',
+        'ElderGuard AI: app nativa para Garmin',
+        'ElderGuard AI: versión para Wear OS',
       ],
       en: [
         'AutoClean AI: Android app with Expo and EAS Build',
-        'ElderGuard AI: app on a Garmin Forerunner 165',
-        'ElderGuard AI: backup version on Wear OS',
-      ],
-    },
-  },
-  {
-    title: { es: 'Escritorio y Juegos', en: 'Desktop & Games' },
-    items: [
-      { name: 'Electron', level: 'production' },
-      { name: 'Web Audio API + FFmpeg', level: 'production' },
-      { name: 'Unity + C#', level: 'projects' },
-    ],
-    usedIn: {
-      es: [
-        'PodcastCraft AI: app de escritorio con Electron',
-        'PodcastCraft AI: motor de audio y exportación MP3',
-        'Plomo y Paja: arte, enemigos y pistas en Unity',
-      ],
-      en: [
         'PodcastCraft AI: Electron desktop app',
-        'PodcastCraft AI: audio engine and MP3 export',
-        'Plomo y Paja: art, enemies and clues in Unity',
+        'ElderGuard AI: native Garmin app',
+        'ElderGuard AI: Wear OS version',
       ],
     },
   },
   {
-    title: { es: 'Backend, IA y datos', en: 'Backend, AI & data' },
-    items: [
-      { name: 'Node.js + Express', level: 'production' },
-      { name: 'Prisma + SQLite', level: 'projects' },
-      { name: 'Google Gemini', level: 'production' },
-      { name: 'OpenAI API', level: 'projects' },
-      { name: 'Java', level: 'learning' },
-    ],
+    title: { es: 'Juegos e IA', en: 'Games & AI' },
+    items: ['Unity + C#', 'Google Gemini', 'OpenAI API', 'Web Audio API + FFmpeg'],
     usedIn: {
       es: [
-        'AutoClean AI: API en Express desplegada en Render',
-        'AutoClean AI: base de datos con Prisma + SQLite',
+        'Plomo y Paja: arte, enemigos y pistas en Unity',
         'Gemini en PodcastCraft, AutoClean y ElderGuard',
         'OpenAI: voz interior de Plomo y Paja',
-        'Java: cursos de la carrera',
+        'PodcastCraft AI: motor de audio y exportación MP3',
       ],
       en: [
-        'AutoClean AI: Express API deployed on Render',
-        'AutoClean AI: database with Prisma + SQLite',
+        'Plomo y Paja: art, enemies and clues in Unity',
         'Gemini in PodcastCraft, AutoClean and ElderGuard',
         'OpenAI: inner voice in Plomo y Paja',
-        'Java: university courses',
+        'PodcastCraft AI: audio engine and MP3 export',
       ],
     },
   },
@@ -672,12 +653,12 @@ export const spokenLanguages = [
   },
   {
     name: { es: 'Inglés', en: 'English' },
-    level: { es: 'Intermedio', en: 'Intermediate' },
+    level: { es: 'Intermedio · Lectura técnica fluida', en: 'Intermediate · Fluent technical reading' },
     note: {
-      es: 'Lo leo y lo escribo sin problema; sigo practicando la conversación.',
-      en: 'I read and write it comfortably; I keep practicing conversation.',
+      es: 'Leo documentación, código y artículos técnicos en inglés sin problema y escribo con soltura. Sigo fortaleciendo la conversación.',
+      en: "I read documentation, code and technical articles in English with no trouble and write comfortably. I'm still building up my conversation.",
     },
-    value: 55,
+    value: 60,
   },
 ]
 
@@ -690,8 +671,8 @@ export const achievements: { icon: AchievementIcon; title: L; meta: L }[] = [
   },
   {
     icon: 'rocket',
-    title: { es: '4 apps publicadas con instalador', en: '4 apps shipped with an installer' },
-    meta: { es: 'Escritorio, móvil, reloj y juego', en: 'Desktop, mobile, watch and game' },
+    title: { es: 'Apps publicadas en 4 plataformas', en: 'Apps shipped on 4 platforms' },
+    meta: { es: 'Escritorio, móvil, wearable y juego', en: 'Desktop, mobile, wearable and game' },
   },
   {
     icon: 'watch',
