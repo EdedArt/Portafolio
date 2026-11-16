@@ -1,3 +1,15 @@
+import { useTheme } from './theme/ThemeProvider'
+
 export default function App() {
-  return <main className="p-8 text-2xl font-bold">Portafolio · Edgar Arteaga</main>
+  const { theme, toggleTheme } = useTheme()
+  return (
+    <main className="min-h-screen bg-bg p-8 text-ink">
+      <h1 className="font-display text-5xl font-extrabold uppercase">
+        Edgar <span className="font-serif font-normal normal-case italic text-primary-text">Arteaga</span>
+      </h1>
+      <button onClick={toggleTheme} className="mt-6 rounded-full bg-primary px-4 py-2 text-on-primary">
+        {theme}
+      </button>
+    </main>
+  )
 }
