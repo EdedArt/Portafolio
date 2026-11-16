@@ -3,14 +3,44 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edgar Arteaga · Portafolio</title>
+    <title>Edgar Arteaga · Desarrollador de Software</title>
+    <meta
+      name="description"
+      content="Portafolio de Edgar Mauricio Arteaga Realpe, estudiante de Ingeniería de Software en la UCC Pasto. Cuatro apps publicadas con instalador: escritorio, móvil, smartwatch Garmin y videojuego."
+    />
+    <meta name="author" content="Edgar Mauricio Arteaga Realpe" />
     <meta name="theme-color" content="#fbf8f7" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/edgar.jpg" />
+
+    <!-- Open Graph / redes sociales -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:site_name" content="Edgar Arteaga" />
+    <meta property="og:title" content="Edgar Arteaga · Desarrollador de Software" />
+    <meta
+      property="og:description"
+      content="Diseño interfaces que funcionan en cualquier pantalla, del escritorio a la muñeca. Escritorio, móvil, wearables y juegos."
+    />
+    <meta property="og:image" content="/edgar.jpg" />
+    <meta property="og:image:width" content="900" />
+    <meta property="og:image:height" content="900" />
+    <meta property="og:image:alt" content="Retrato de Edgar Arteaga" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Edgar Arteaga · Desarrollador de Software" />
+    <meta name="twitter:image" content="/edgar.jpg" />
+
     <script>
       // Aplica tema e idioma antes del primer render para evitar parpadeo.
+      // Por defecto: tema claro y español, sin importar la configuración del sistema.
       ;(function () {
         try {
           var theme = localStorage.getItem('theme')
-          if (theme === 'dark') document.documentElement.classList.add('dark')
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark')
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0c0809')
+          }
           var lang = localStorage.getItem('lang')
           if (lang === 'en' || lang === 'es') document.documentElement.lang = lang
         } catch (e) {}
@@ -22,8 +52,14 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&display=swap"
     />
+    <link rel="preload" as="image" href="/edgar.jpg" fetchpriority="high" />
   </head>
   <body>
+    <noscript>
+      <p style="padding: 24px; font-family: system-ui, sans-serif">
+        Este portafolio necesita JavaScript. Escríbeme a edgar20arteaga06@gmail.com · github.com/EdedArt
+      </p>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
