@@ -2,7 +2,9 @@
 // Usa {edad} y {año} como marcadores; se reemplazan en tiempo de ejecución.
 export const es = {
   meta: {
-    title: 'Edgar Arteaga · Desarrollador de Software',
+    title: 'Edgar Arteaga · Full Stack & Multiplatform Developer',
+    description:
+      'Portafolio de Edgar Arteaga, Full Stack & Multiplatform Developer de Pasto, Colombia. Software de punta a punta para escritorio, móvil, wearables y videojuegos con Electron, React Native, NestJS, Unity y Connect IQ.',
     skip: 'Saltar al contenido',
   },
   nav: {
@@ -16,7 +18,7 @@ export const es = {
     contact: 'Contacto',
   },
   header: {
-    role: 'Software Developer',
+    role: 'Full Stack & Multiplatform Developer',
     homeLabel: 'ir al inicio',
     cv: 'CV',
     cvLabel: 'Descargar hoja de vida en PDF',
@@ -253,8 +255,7 @@ export const es = {
     copied: 'Correo copiado',
   },
   footer: {
-    description:
-      'Desarrollador de Software de Pasto, Colombia. Diseño interfaces para escritorio, móvil, wearables y juegos.',
+    description: 'Software de punta a punta: escritorio, móvil, wearables y videojuegos.',
     navTitle: 'Navegación',
     downloadsTitle: 'Descargas',
     contactTitle: 'Contacto',

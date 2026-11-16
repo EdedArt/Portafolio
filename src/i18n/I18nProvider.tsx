@@ -41,7 +41,16 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.lang = lang
-    document.title = dicts[lang].meta.title
+    const { title, description } = dicts[lang].meta
+    document.title = title
+    const setMeta = (selector: string, value: string) => document.querySelector(selector)?.setAttribute('content', value)
+    setMeta('meta[name="description"]', description)
+    setMeta('meta[property="og:title"]', title)
+    setMeta('meta[property="og:description"]', description)
+    setMeta('meta[name="twitter:title"]', title)
+    setMeta('meta[name="twitter:description"]', description)
+    setMeta('meta[property="og:locale"]', lang === 'es' ? 'es_CO' : 'en_US')
+    setMeta('meta[property="og:locale:alternate"]', lang === 'es' ? 'en_US' : 'es_CO')
     try {
       localStorage.setItem('lang', lang)
     } catch {

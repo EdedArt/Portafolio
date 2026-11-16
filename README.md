@@ -1,6 +1,6 @@
 # Portafolio · Edgar Arteaga
 
-Portafolio personal de **Edgar Mauricio Arteaga Realpe**, estudiante de Ingeniería de Software en la Universidad Cooperativa de Colombia (sede Pasto). Es la base de la exposición final de la materia **Diseño de Interfaces de Software**.
+Portafolio personal de **Edgar Mauricio Arteaga Realpe**, Full Stack & Multiplatform Developer y estudiante de Ingeniería de Software en la Universidad Cooperativa de Colombia (sede Pasto). Es la base de la exposición final de la materia **Diseño de Interfaces de Software**.
 
 Sitio estático (solo frontend), bilingüe (español / inglés), con tema claro y oscuro, animaciones 3D y un “Lab 3D” interactivo con los cuatro proyectos publicados: PodcastCraft AI, AutoClean AI, ElderGuard AI y Plomo y Paja.
 
@@ -38,60 +38,32 @@ npm run preview   # sirve dist/ para probar la versión final
 
 | Qué | Archivo |
 | --- | --- |
-| Proyectos, herramientas, trayectoria, habilidades, idiomas, logros y testimonios | `src/data/content.ts` |
+| Proyectos, “Más proyectos”, herramientas, trayectoria, habilidades, idiomas, logros y testimonios | `src/data/content.ts` |
 | Correo, GitHub, **LinkedIn**, ruta del CV, coordenadas | arriba de `src/data/content.ts` |
 | Textos de la interfaz (hero, sobre mí, botones, formulario, etc.) | `src/i18n/es.ts` y `src/i18n/en.ts` |
 | Fecha de nacimiento (la edad se calcula sola) | `src/lib/age.ts` |
 | Colores de los temas | `src/index.css` (`:root` y `.dark`) |
 | Foto y hoja de vida | `public/edgar.jpg` y `public/CV_Edgar_Arteaga.pdf` |
+| Capturas de los proyectos | `public/proyectos/` |
+| Firma | `src/assets/signature.svg` |
 
 Cada texto de `content.ts` tiene su versión en los dos idiomas: `{ es: '...', en: '...' }`. Los diccionarios `es.ts` y `en.ts` deben tener la misma forma (TypeScript avisa si falta algo en inglés).
 
-### LinkedIn
+### Firma
 
-En `src/data/content.ts`:
+La firma animada sale de `src/assets/signature.svg` y se usa con el componente `<Signature />` (props `width`, `color`, `animate`, `delay`, `duration`, `trigger`). Para usar tu firma real escaneada, vectorízala como trazos (Inkscape o Illustrator) y reemplaza los `<path>` del SVG. Si queda como relleno en lugar de trazo, usa `animate={false}`.
 
-```ts
-export const LINKEDIN_URL = 'https://www.linkedin.com/in/tu-usuario'
-```
+### Capturas de un proyecto
 
-Mientras esté vacío, los íconos y la tarjeta de LinkedIn no se muestran.
+Cada proyecto acepta `images` (y `video` opcional) en `content.ts`; aparecen en la galería del modal “Ver detalles”. Con `galleryLayout: 'phones'` las capturas se muestran en una fila de teléfonos. Las tarjetas animadas de cada proyecto están en `src/components/mockups/` y eligen la captura clara u oscura según el tema.
 
-### Capturas o videos de un proyecto
+### Más proyectos
 
-Cada proyecto acepta `images` y `video` opcionales. Si existen, aparecen en el modal “Ver detalles”:
+En `moreProjects` de `content.ts`. Mientras `repo` esté vacío, la tarjeta no muestra el botón de código.
 
-```ts
-{
-  id: 'podcastcraft',
-  // ...
-  video: 'https://www.youtube.com/embed/ID_DEL_VIDEO', // o '/proyectos/podcast.mp4'
-  images: [
-    { src: '/proyectos/podcast-1.png', alt: { es: 'Línea de tiempo', en: 'Timeline' } },
-  ],
-}
-```
+### Testimonios
 
-Pon los archivos en `public/proyectos/`.
-
-## Reemplazar los testimonios borrador
-
-Los tres testimonios de `src/data/content.ts` son **borradores**: llevan `borrador: true`, por eso la tarjeta muestra la etiqueta “Borrador” y en lugar del nombre aparece el rol. Cuando tengas una opinión real:
-
-1. Cambia `texto` (en `es` y `en`) por las palabras reales de la persona.
-2. Agrega `nombre: 'Nombre Apellido'` y actualiza `iniciales`.
-3. Cambia `borrador: true` por `borrador: false`.
-
-```ts
-{
-  borrador: false,
-  nombre: 'David Cabezas',
-  iniciales: 'DC',
-  rol: { es: 'Compañero de equipo · Plomo y Paja', en: 'Teammate · Plomo y Paja' },
-  texto: { es: '...', en: '...' },
-  hashtags: ['#Arte2D', '#TrabajoEnEquipo', '#Responsable'],
-}
-```
+Cada testimonio tiene `nombre`, `iniciales`, `rol`, `texto` (ES/EN) y `hashtags`. Si algún día agregas uno sin confirmar, ponle `borrador: true` y la tarjeta mostrará la etiqueta “Borrador”.
 
 ## Accesibilidad y rendimiento
 

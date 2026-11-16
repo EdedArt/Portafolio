@@ -3,7 +3,9 @@ import type { Dict } from './es'
 // English UI dictionary. Must mirror the shape of es.ts.
 export const en: Dict = {
   meta: {
-    title: 'Edgar Arteaga · Software Developer',
+    title: 'Edgar Arteaga · Full Stack & Multiplatform Developer',
+    description:
+      'Portfolio of Edgar Arteaga, Full Stack & Multiplatform Developer from Pasto, Colombia. End-to-end software for desktop, mobile, wearables and video games with Electron, React Native, NestJS, Unity and Connect IQ.',
     skip: 'Skip to content',
   },
   nav: {
@@ -17,7 +19,7 @@ export const en: Dict = {
     contact: 'Contact',
   },
   header: {
-    role: 'Software Developer',
+    role: 'Full Stack & Multiplatform Developer',
     homeLabel: 'go to top',
     cv: 'CV',
     cvLabel: 'Download résumé as PDF',
@@ -252,8 +254,7 @@ export const en: Dict = {
     copied: 'Email copied',
   },
   footer: {
-    description:
-      'Software Developer from Pasto, Colombia. I design interfaces for desktop, mobile, wearables and games.',
+    description: 'End-to-end software: desktop, mobile, wearables and video games.',
     navTitle: 'Navigation',
     downloadsTitle: 'Downloads',
     contactTitle: 'Contact',
