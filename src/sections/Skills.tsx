@@ -31,7 +31,7 @@ function FlipCard({ group, index }: { group: SkillGroup; index: number }) {
       initial={{ opacity: 0, y: 24 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.08 }}
-      className="h-[360px]"
+      className="h-[380px]"
       style={{ perspective: 1200 }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

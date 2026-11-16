@@ -51,7 +51,6 @@ export interface Tool {
 }
 
 const tool = (category: L, name: string, usedIn: L): Tool => ({ name, category, usedIn })
-const COURSES: L = { es: 'Proyectos de la carrera', en: 'University projects' }
 
 export const tools: Tool[] = [
   tool({ es: 'Core', en: 'Core' }, 'JavaScript / TypeScript', { es: 'PodcastCraft AI, AutoClean AI y este portafolio', en: 'PodcastCraft AI, AutoClean AI and this portfolio' }),
@@ -62,8 +61,8 @@ export const tools: Tool[] = [
   tool({ es: 'Backend', en: 'Backend' }, 'NestJS', { es: 'PetCare', en: 'PetCare' }),
   tool({ es: 'Datos', en: 'Data' }, 'PostgreSQL', { es: 'PetCare', en: 'PetCare' }),
   tool({ es: 'Datos', en: 'Data' }, 'Prisma + SQLite', { es: 'AutoClean AI', en: 'AutoClean AI' }),
-  tool({ es: 'Lenguaje', en: 'Language' }, 'Java', COURSES),
-  tool({ es: 'Backend', en: 'Backend' }, 'Python + Django', COURSES),
+  tool({ es: 'Lenguaje', en: 'Language' }, 'Java', { es: 'Todas las materias de programación de la carrera', en: 'All programming courses in my degree' }),
+  tool({ es: 'Backend', en: 'Backend' }, 'Python + Django', { es: 'Proyectos de la universidad y software para droguería', en: 'University projects and software for a pharmacy' }),
   tool({ es: 'Juegos', en: 'Games' }, 'Unity + C#', { es: 'Plomo y Paja', en: 'Plomo y Paja' }),
   tool({ es: 'Wearables', en: 'Wearables' }, 'Monkey C / Connect IQ', { es: 'ElderGuard AI', en: 'ElderGuard AI' }),
   tool({ es: 'IA', en: 'AI' }, 'Google Gemini API', { es: 'PodcastCraft, AutoClean y ElderGuard', en: 'PodcastCraft, AutoClean and ElderGuard' }),
@@ -444,7 +443,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     borrador: false,
-    nombre: 'Osvaldo Martínez',
+    nombre: 'Oswaldo Martínez',
     iniciales: 'OM',
     rol: { es: 'Proyectos de software para droguería', en: 'Software projects for a drugstore' },
     texto: {
@@ -596,13 +595,15 @@ export const skillGroups: SkillGroup[] = [
         'AutoClean AI: API en Express con Prisma + SQLite, desplegada en Render',
         'PetCare: API en NestJS con PostgreSQL',
         'PodcastCraft AI: servicios locales en Node.js',
-        'Java y Python + Django: proyectos de la carrera',
+        'Java: todas las materias de programación de la carrera',
+        'Python + Django: proyectos de la universidad y software para droguería',
       ],
       en: [
         'AutoClean AI: Express API with Prisma + SQLite, deployed on Render',
         'PetCare: NestJS API with PostgreSQL',
         'PodcastCraft AI: local services in Node.js',
-        'Java and Python + Django: university projects',
+        'Java: all programming courses in my degree',
+        'Python + Django: university projects and software for a pharmacy',
       ],
     },
   },
