@@ -104,8 +104,10 @@ export interface Project {
   extraCode?: ProjectLink[]
   /** Opcional: video real del proyecto (URL de YouTube embed o archivo .mp4 en /public) */
   video?: string
-  /** Opcional: capturas reales (rutas en /public, p. ej. '/proyectos/podcast-1.png') */
-  images?: { src: string; alt: L }[]
+  /** Opcional: capturas reales (rutas en /public, p. ej. '/proyectos/podcast-1.png'); aparecen en la galería del modal */
+  images?: { src: string; alt: L; width: number; height: number }[]
+  /** 'phones': la galería muestra las capturas en una fila de teléfonos */
+  galleryLayout?: 'wide' | 'phones'
 }
 
 export const projects: Project[] = [
@@ -167,6 +169,10 @@ export const projects: Project[] = [
     },
     downloadUrl: 'https://github.com/EdedArt/PodcastCraft_AI/releases/latest',
     codeUrl: 'https://github.com/EdedArt/PodcastCraft_AI',
+    images: [
+      { src: '/proyectos/podcastcraft-light.webp', width: 1365, height: 699, alt: { es: 'Editor multipista de PodcastCraft AI en tema claro', en: 'PodcastCraft AI multitrack editor in light theme' } },
+      { src: '/proyectos/podcastcraft-dark.webp', width: 1364, height: 695, alt: { es: 'Editor multipista de PodcastCraft AI en tema oscuro', en: 'PodcastCraft AI multitrack editor in dark theme' } },
+    ],
   },
   {
     id: 'autoclean',
@@ -239,20 +245,31 @@ export const projects: Project[] = [
     downloadUrl: 'https://github.com/EdedArt/AutoClean_AI_Frontend/releases/latest',
     codeUrl: 'https://github.com/EdedArt/AutoClean_AI_Frontend',
     extraCode: [{ label: { es: 'Código backend', en: 'Backend code' }, url: 'https://github.com/EdedArt/AutoClean_AI' }],
+    galleryLayout: 'phones',
+    images: [
+      { src: '/proyectos/autoclean-login.webp', width: 214, height: 464, alt: { es: 'Inicio de sesión', en: 'Sign-in' } },
+      { src: '/proyectos/autoclean-buscar.webp', width: 213, height: 445, alt: { es: 'Consulta por placa', en: 'Plate lookup' } },
+      { src: '/proyectos/autoclean-remojo-light.webp', width: 212, height: 464, alt: { es: 'Fase de remojo (30 %)', en: 'Soak phase (30%)' } },
+      { src: '/proyectos/autoclean-lavado-light.webp', width: 214, height: 450, alt: { es: 'Fase de lavado (55 %), tema claro', en: 'Wash phase (55%), light theme' } },
+      { src: '/proyectos/autoclean-secado-light.webp', width: 212, height: 442, alt: { es: 'Fase de secado (80 %), tema claro', en: 'Dry phase (80%), light theme' } },
+      { src: '/proyectos/autoclean-lavado-dark.webp', width: 213, height: 445, alt: { es: 'Fase de lavado (55 %), tema oscuro', en: 'Wash phase (55%), dark theme' } },
+      { src: '/proyectos/autoclean-secado-dark.webp', width: 213, height: 446, alt: { es: 'Fase de secado (80 %), tema oscuro', en: 'Dry phase (80%), dark theme' } },
+    ],
   },
   {
     id: 'elderguard',
     name: 'ElderGuard AI',
     platform: 'watch',
     platformLabel: { es: 'Smartwatch', en: 'Smartwatch' },
+    // Cuando esté instalada en el reloj, cambiar a "funcionando en un Garmin Forerunner 165 real"
     requirements: { es: 'Garmin Forerunner 165', en: 'Garmin Forerunner 165' },
     tagline: {
       es: 'Un reloj que cuida a los adultos mayores.',
       en: 'A watch that looks after older adults.',
     },
     description: {
-      es: 'App para relojes Garmin que detecta caídas y ritmo cardíaco anormal en reposo. Si pasa algo, muestra una cuenta regresiva que se puede cancelar y avisa a la familia con la ubicación. El texto de la alerta lo redacta Gemini; si no hay internet, usa una plantilla.',
-      en: 'App for Garmin watches that detects falls and abnormal resting heart rate. If something happens, it shows a cancellable countdown and notifies the family with the location. Gemini writes the alert text; without internet, it falls back to a template.',
+      es: 'App nativa para relojes Garmin (Monkey C / Connect IQ) que detecta caídas y ritmo cardíaco anormal en reposo. Si pasa algo, muestra una cuenta regresiva que se puede cancelar y avisa a la familia con la ubicación. El texto de la alerta lo redacta Gemini; si no hay internet, usa una plantilla.',
+      en: 'Native Garmin app (Monkey C / Connect IQ) that detects falls and abnormal resting heart rate. If something happens, it shows a cancellable countdown and notifies the family with the location. Gemini writes the alert text; without internet, it falls back to a template.',
     },
     features: {
       es: [
@@ -359,6 +376,10 @@ export const projects: Project[] = [
     },
     downloadUrl: 'https://github.com/EdedArt/Plomo_Y_Paja/releases/latest',
     codeUrl: 'https://github.com/EdedArt/Plomo_Y_Paja',
+    images: [
+      { src: '/proyectos/plomo-portada.webp', width: 1348, height: 688, alt: { es: 'Portada del juego al atardecer', en: 'Game cover at sunset' } },
+      { src: '/proyectos/plomo-menu.webp', width: 1365, height: 767, alt: { es: 'Menú principal: tormenta, el lobo y los tres cerditos', en: 'Main menu: storm, the wolf and the three little pigs' } },
+    ],
   },
 ]
 
@@ -651,7 +672,8 @@ export const achievements: { icon: AchievementIcon; title: L; meta: L }[] = [
   },
   {
     icon: 'watch',
-    title: { es: 'App en un reloj Garmin real', en: 'App on a real Garmin watch' },
+    // Cuando esté instalada en el reloj, cambiar a "funcionando en un Garmin Forerunner 165 real"
+    title: { es: 'App nativa para Garmin (Monkey C / Connect IQ)', en: 'Native Garmin app (Monkey C / Connect IQ)' },
     meta: { es: 'ElderGuard AI · Forerunner 165', en: 'ElderGuard AI · Forerunner 165' },
   },
   {

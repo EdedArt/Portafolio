@@ -1,19 +1,42 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, Check, X } from 'lucide-react'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { Project } from '../data/content'
 import { useI18n } from '../i18n/I18nProvider'
 import { lockScroll } from '../lib/scroll'
 import { GithubIcon, PlatformIcon } from './icons'
 import { ProjectMockup } from './mockups/ProjectMockup'
+import { ProjectGallery, type Shot } from './ProjectGallery'
 import { btnGhost, btnPrimary } from './ui/motion'
 
 export function ProjectModal({ project, onClose }: { project: Project | null; onClose: () => void }) {
   const { t, l, ll } = useI18n()
   const dialogRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
+  const zoomCloseRef = useRef<HTMLButtonElement>(null)
   const m = t.projects.modal
+  const [zoom, setZoom] = useState<Shot | null>(null)
+  const zoomRef = useRef<Shot | null>(null)
+  zoomRef.current = zoom
+  const lastZoomTrigger = useRef<HTMLElement | null>(null)
+
+  const openZoom = (s: Shot) => {
+    lastZoomTrigger.current = document.activeElement as HTMLElement | null
+    setZoom(s)
+  }
+  const closeZoom = () => {
+    setZoom(null)
+    lastZoomTrigger.current?.focus()
+  }
+
+  useEffect(() => {
+    if (zoom) zoomCloseRef.current?.focus()
+  }, [zoom])
+
+  useEffect(() => {
+    if (!project) setZoom(null)
+  }, [project])
 
   useEffect(() => {
     if (!project) return
@@ -21,6 +44,18 @@ export function ProjectModal({ project, onClose }: { project: Project | null; on
     lockScroll(true)
     closeRef.current?.focus()
     const onKey = (e: KeyboardEvent) => {
+      // Con una captura ampliada, Esc y Tab solo afectan a la vista ampliada
+      if (zoomRef.current) {
+        if (e.key === 'Escape') {
+          setZoom(null)
+          lastZoomTrigger.current?.focus()
+        }
+        if (e.key === 'Tab') {
+          e.preventDefault()
+          zoomCloseRef.current?.focus()
+        }
+        return
+      }
       if (e.key === 'Escape') onClose()
       // Trampa de foco
       if (e.key === 'Tab' && dialogRef.current) {
@@ -99,24 +134,20 @@ export function ProjectModal({ project, onClose }: { project: Project | null; on
               {(project.video || project.images?.length) && (
                 <div className="mt-8">
                   <h3 className={h4}>{m.gallery}</h3>
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    {project.video &&
-                      (/\.(mp4|webm)$/i.test(project.video) ? (
-                        <video src={project.video} controls preload="metadata" className="w-full rounded-2xl sm:col-span-2" />
-                      ) : (
-                        <iframe
-                          src={project.video}
-                          title={project.name}
-                          className="aspect-video w-full rounded-2xl sm:col-span-2"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          loading="lazy"
-                        />
-                      ))}
-                    {project.images?.map((img) => (
-                      <img key={img.src} src={img.src} alt={l(img.alt)} loading="lazy" className="w-full rounded-2xl border border-line" />
+                  {project.video &&
+                    (/\.(mp4|webm)$/i.test(project.video) ? (
+                      <video src={project.video} controls preload="metadata" className="mb-4 w-full rounded-2xl" />
+                    ) : (
+                      <iframe
+                        src={project.video}
+                        title={project.name}
+                        className="mb-4 aspect-video w-full rounded-2xl"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        loading="lazy"
+                      />
                     ))}
-                  </div>
+                  <ProjectGallery key={project.id} project={project} onZoom={openZoom} />
                 </div>
               )}
 
@@ -196,6 +227,46 @@ export function ProjectModal({ project, onClose }: { project: Project | null; on
               </div>
             </div>
           </motion.div>
+
+          {/* Captura ampliada (tamaño real como máximo, sin estirarla) */}
+          <AnimatePresence>
+            {zoom && (
+              <motion.div
+                role="dialog"
+                aria-modal="true"
+                aria-label={l(zoom.alt)}
+                className="fixed inset-0 z-[90] grid place-items-center bg-black/90 p-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onMouseDown={(e) => {
+                  e.stopPropagation()
+                  if (e.target === e.currentTarget) closeZoom()
+                }}
+              >
+                <button
+                  ref={zoomCloseRef}
+                  type="button"
+                  onClick={closeZoom}
+                  aria-label={m.closeZoom}
+                  className="absolute top-4 right-4 grid size-11 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-primary"
+                >
+                  <X size={20} aria-hidden="true" />
+                </button>
+                <motion.img
+                  src={zoom.src}
+                  alt={l(zoom.alt)}
+                  width={zoom.width}
+                  height={zoom.height}
+                  className="h-auto max-h-[88vh] w-auto max-w-[94vw] rounded-xl object-contain shadow-2xl"
+                  initial={{ scale: 0.92 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0.95 }}
+                  onClick={closeZoom}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </motion.div>
       )}
     </AnimatePresence>,

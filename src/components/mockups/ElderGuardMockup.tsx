@@ -5,7 +5,7 @@ import { useI18n } from '../../i18n/I18nProvider'
 
 const COUNT = 10
 
-/** Reloj redondo tipo Garmin con ECG y simulación de caída */
+/** Reloj redondo estilo Garmin Forerunner 165: bisel negro, 5 botones, pantalla AMOLED, pulso y simulación de caída */
 export function ElderGuardMockup({ active = true }: { active?: boolean }) {
   const { t } = useI18n()
   const m = t.projects.mockup
@@ -39,22 +39,31 @@ export function ElderGuardMockup({ active = true }: { active?: boolean }) {
         animate={active ? { rotateY: [-14, 12, -14], rotateX: [10, 4, 10] } : { rotateX: 8 }}
         transition={{ duration: 10, repeat: active ? Infinity : 0, ease: 'easeInOut' }}
       >
-        {/* Correa */}
-        <div className="absolute top-[-22%] bottom-[-22%] left-1/2 -z-10 w-[46%] -translate-x-1/2 rounded-[2rem] bg-gradient-to-b from-[#2a2226] via-[#1a1417] to-[#2a2226]" style={{ transform: 'translateZ(-20px)' }} />
-        {/* Botones laterales */}
-        {[22, 50, 72].map((top) => (
-          <span key={top} className="absolute -right-[3%] h-[9%] w-[5%] rounded-sm bg-[#3a3034]" style={{ top: `${top}%` }} />
+        {/* Correa de silicona */}
+        <div className="absolute top-[-24%] bottom-[-24%] left-1/2 -z-10 w-[48%] -translate-x-1/2 rounded-[2rem] bg-gradient-to-b from-[#26262a] via-[#141416] to-[#26262a]" style={{ transform: 'translateZ(-20px)' }} />
+        {/* 5 botones: 3 a la izquierda (luz, arriba, abajo) y 2 a la derecha (start/stop, atrás) */}
+        {[24, 50, 76].map((top) => (
+          <span key={`l${top}`} className="absolute -left-[3.5%] h-[8%] w-[5%] -translate-y-1/2 rounded-l-md bg-gradient-to-r from-[#3a3a3f] to-[#1c1c1f]" style={{ top: `${top}%` }} />
         ))}
-        {/* Bisel */}
-        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#4a4045] via-[#1e181b] to-[#3a3034] p-[5%] shadow-2xl">
-          <div className="relative size-full overflow-hidden rounded-full bg-black text-white">
+        {[30, 70].map((top, i) => (
+          <span
+            key={`r${top}`}
+            className={`absolute -right-[3.5%] h-[8%] w-[5%] -translate-y-1/2 rounded-r-md ${i === 0 ? 'bg-gradient-to-l from-[#c81e2e] to-[#7a0f19]' : 'bg-gradient-to-l from-[#3a3a3f] to-[#1c1c1f]'}`}
+            style={{ top: `${top}%` }}
+          />
+        ))}
+        {/* Bisel negro */}
+        <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#3b3b40] via-[#0c0c0e] to-[#2a2a2e] p-[6%] shadow-2xl ring-1 ring-black">
+          <div className="relative size-full overflow-hidden rounded-full bg-black text-white ring-2 ring-[#1d1d20]">
+            {/* Reflejo del cristal */}
+            <span className="pointer-events-none absolute -top-1/4 -left-1/4 z-10 size-3/4 rounded-full bg-white/[0.05] blur-md" />
             {fall === null ? (
               <div className="flex size-full flex-col items-center justify-center">
-                <p className="font-mono text-[9px] tracking-widest text-white/70">ELDERGUARD</p>
-                <p className="font-display text-[clamp(1.8rem,4vw,2.6rem)] leading-none font-extrabold tabular-nums">
+                <p className="font-mono text-[9px] tracking-widest text-white/75">ELDERGUARD</p>
+                <p className="font-display text-[clamp(2.3rem,5.2vw,3.3rem)] leading-[0.95] font-extrabold tracking-tight tabular-nums">
                   {hh}:{mm}
                 </p>
-                <div className="mt-1 flex items-center gap-1.5 text-sm font-bold">
+                <div className="mt-1 flex items-center gap-1.5 text-base font-extrabold">
                   <motion.span animate={active ? { scale: [1, 1.3, 1] } : undefined} transition={{ duration: 0.85, repeat: Infinity }}>
                     <Heart size={14} className="fill-[#ff3b4e] text-[#ff3b4e]" />
                   </motion.span>

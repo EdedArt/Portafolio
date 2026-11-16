@@ -171,6 +171,29 @@ html.lenis body {
   55% { opacity: 0.96; }
 }
 
+@keyframes playhead {
+  from { left: 0%; }
+  to { left: 100%; }
+}
+
+@keyframes sheen {
+  0%, 55% { transform: translateX(0); }
+  100% { transform: translateX(300%); }
+}
+
+@keyframes flicker-soft {
+  0%, 100% { opacity: 1; }
+  47% { opacity: 0.94; }
+  52% { opacity: 0.98; }
+}
+
+@keyframes scratch {
+  0% { left: 14%; }
+  30% { left: 68%; }
+  55% { left: 33%; }
+  100% { left: 86%; }
+}
+
 @keyframes float-y {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
@@ -184,6 +207,18 @@ html.lenis body {
 }
 .animate-flicker {
   animation: flicker 0.18s steps(2) infinite;
+}
+.animate-playhead {
+  animation: playhead 7s linear infinite;
+}
+.animate-sheen {
+  animation: sheen 3.2s ease-in-out infinite;
+}
+.animate-flicker-soft {
+  animation: flicker-soft 0.24s steps(3) infinite;
+}
+.animate-scratch {
+  animation: scratch 3s linear infinite;
 }
 .animate-grain {
   animation: grain 0.8s steps(4) infinite;
