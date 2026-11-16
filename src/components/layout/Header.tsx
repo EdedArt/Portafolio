@@ -49,12 +49,13 @@ export function Header() {
           scrolled ? 'shadow-soft' : ''
         }`}
       >
-        <a href="#inicio" className="flex min-w-0 items-center gap-3 rounded-full pr-2" aria-label={t.header.homeLabel}>
+        <a href="#inicio" className="flex min-w-0 items-center gap-3 rounded-full pr-2">
           <Monogram />
-          <span className="hidden min-w-0 leading-tight sm:block lg:hidden xl:block">
+          <span className="sr-only min-w-0 leading-tight sm:not-sr-only sm:block lg:sr-only xl:not-sr-only xl:block">
             <span className="block truncate font-display text-[15px] font-extrabold">Edgar Arteaga</span>
             <span className="block truncate font-mono text-[11px] text-muted">{t.header.role}</span>
           </span>
+          <span className="sr-only">, {t.header.homeLabel}</span>
         </a>
 
         <nav aria-label={t.header.mainNav} className="hidden lg:block">
@@ -89,7 +90,7 @@ export function Header() {
           <button
             type="button"
             onClick={toggleLang}
-            aria-label={t.header.langLabel}
+            aria-label={`ES / EN: ${t.header.langLabel}`}
             className="h-10 rounded-full border border-line bg-surface/60 px-3 font-mono text-xs font-medium transition-colors hover:border-primary"
           >
             <span className={lang === 'es' ? 'text-primary-text' : 'text-muted'}>ES</span>
@@ -117,7 +118,7 @@ export function Header() {
           <a
             href={CV_URL}
             download
-            aria-label={t.header.cvLabel}
+            aria-label={`${t.header.cv}: ${t.header.cvLabel}`}
             className="hidden h-10 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-semibold text-on-primary transition-transform hover:scale-[1.04] min-[400px]:flex"
           >
             <Download size={15} aria-hidden="true" />

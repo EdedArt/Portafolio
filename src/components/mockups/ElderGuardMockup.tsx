@@ -50,7 +50,7 @@ export function ElderGuardMockup({ active = true }: { active?: boolean }) {
           <div className="relative size-full overflow-hidden rounded-full bg-black text-white">
             {fall === null ? (
               <div className="flex size-full flex-col items-center justify-center">
-                <p className="font-mono text-[9px] tracking-widest text-white/50">ELDERGUARD</p>
+                <p className="font-mono text-[9px] tracking-widest text-white/70">ELDERGUARD</p>
                 <p className="font-display text-[clamp(1.8rem,4vw,2.6rem)] leading-none font-extrabold tabular-nums">
                   {hh}:{mm}
                 </p>

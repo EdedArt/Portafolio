@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { tools, type ToolStatus } from '../data/content'
 import { useI18n } from '../i18n/I18nProvider'
 import { useReducedMotion } from '../lib/hooks'
+import { useTheme } from '../theme/ThemeProvider'
 import { FadeIn, SectionHeading, TiltCard, card } from '../components/ui/motion'
 
 export const statusStyle: Record<ToolStatus, string> = {
@@ -12,10 +13,15 @@ export const statusStyle: Record<ToolStatus, string> = {
   learning: 'bg-transparent text-muted border-dashed border-line-strong',
 }
 
-function ScrollWord({ word, progress, range }: { word: string; progress: MotionValue<number>; range: [number, number] }) {
-  const opacity = useTransform(progress, range, [0.14, 1])
+// Colores "apagados" con contraste ≥ 3:1 (texto grande) para cumplir WCAG AA aun sin iluminar
+const DIM = { light: ['#8f8486', '#17110f'], dark: ['#7a6e70', '#f6efef'] } as const
+
+function ScrollWord({ word, progress, range, accent }: { word: string; progress: MotionValue<number>; range: [number, number]; accent?: boolean }) {
+  const { theme } = useTheme()
+  const [from, to] = DIM[theme]
+  const color = useTransform(progress, range, [from, accent ? (theme === 'dark' ? '#ff5a6a' : '#c3102a') : to])
   return (
-    <motion.span style={{ opacity }} className="inline">
+    <motion.span style={{ color }} className="inline">
       {word}{' '}
     </motion.span>
   )
@@ -30,19 +36,17 @@ function ScrollStatement({ text }: { text: string }) {
     return <p className="font-display text-[clamp(1.6rem,4vw,3rem)] leading-[1.12] font-extrabold tracking-tight">{text}</p>
   }
   return (
-    <p ref={ref} className="font-display text-[clamp(1.6rem,4vw,3rem)] leading-[1.12] font-extrabold tracking-tight">
+    <>
+    {/* Texto accesible completo; la versión animada es decorativa */}
+    <p className="sr-only">{text}</p>
+    <p ref={ref} aria-hidden="true" className="font-display text-[clamp(1.6rem,4vw,3rem)] leading-[1.12] font-extrabold tracking-tight">
       {words.map((w, i) => {
         const start = i / words.length
         const accent = /^(Pasto|instalar|computador|celular|reloj|juego\.?|computer|phone|watch|game\.?|install:?)[,.:]?$/i.test(w)
-        return accent ? (
-          <span key={i} className="text-primary-text">
-            <ScrollWord word={w} progress={scrollYProgress} range={[start, start + 1 / words.length]} />
-          </span>
-        ) : (
-          <ScrollWord key={i} word={w} progress={scrollYProgress} range={[start, start + 1 / words.length]} />
-        )
+        return <ScrollWord key={i} word={w} accent={accent} progress={scrollYProgress} range={[start, start + 1 / words.length]} />
       })}
     </p>
+    </>
   )
 }
 

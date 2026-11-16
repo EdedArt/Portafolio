@@ -70,7 +70,7 @@ function FlipCard({ group, index }: { group: SkillGroup; index: number }) {
           className="absolute inset-0 flex flex-col rounded-3xl bg-primary p-6 text-on-primary shadow-soft [backface-visibility:hidden] [transform:rotateY(180deg)]"
           aria-hidden={!isFlipped}
         >
-          <h4 className="font-mono text-xs tracking-widest uppercase opacity-80">{t.skills.usedIn}</h4>
+          <h4 className="font-mono text-xs tracking-widest uppercase">{t.skills.usedIn}</h4>
           <p className="mt-1 font-display text-xl font-extrabold">{l(group.title)}</p>
           <ul className="mt-4 space-y-2 text-sm leading-snug">
             {ll(group.usedIn).map((u) => (

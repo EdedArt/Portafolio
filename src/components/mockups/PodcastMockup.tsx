@@ -51,7 +51,7 @@ export function PodcastMockup({ active = true }: { active?: boolean }) {
         {/* Capa carriles */}
         <div className="absolute inset-x-0 top-7 bottom-0 flex flex-col gap-2 p-3 pr-[34%] transition-transform duration-700 group-hover/mock:[transform:translateZ(40px)]">
           {/* regla */}
-          <div className="flex justify-between font-mono text-[8px] text-white/40">
+          <div className="flex justify-between font-mono text-[8px] text-white/65">
             {['00:00', '00:30', '01:00', '01:30', '02:00'].map((x) => (
               <span key={x}>{x}</span>
             ))}

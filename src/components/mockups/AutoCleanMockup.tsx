@@ -31,13 +31,13 @@ export function AutoCleanMockup({ active = true }: { active?: boolean }) {
         <div className="absolute inset-0 rounded-[2.2rem] border-[6px] border-[#1a1417] bg-[#0f0b0d] p-1 shadow-2xl">
           <div className="relative size-full overflow-hidden rounded-[1.7rem] bg-gradient-to-b from-[#1b1417] to-[#100c0e] px-3 pt-7 text-white">
             <span className="absolute top-2 left-1/2 h-4 w-16 -translate-x-1/2 rounded-full bg-black" />
-            <p className="text-center font-mono text-[8px] tracking-widest text-white/50">AUTOCLEAN AI</p>
+            <p className="text-center font-mono text-[8px] tracking-widest text-white/70">AUTOCLEAN AI</p>
             {/* Placa */}
             <div className="mx-auto mt-3 w-[88%] rounded-md border-2 border-black bg-[#f8d038] px-2 py-1 text-center text-black shadow-lg">
               <p className="font-mono text-[6px] font-bold tracking-widest">PASTO · COLOMBIA</p>
               <p className="font-display text-lg leading-none font-extrabold tracking-wider">NAR 482</p>
             </div>
-            <p className="mt-1 text-center text-[8px] text-white/50">
+            <p className="mt-1 text-center text-[8px] text-white/70">
               {m.plate} · {m.bay}
             </p>
 
@@ -75,13 +75,13 @@ export function AutoCleanMockup({ active = true }: { active?: boolean }) {
                     >
                       {i < phase && <Check size={7} strokeWidth={4} />}
                     </span>
-                    <span className={i <= phase ? 'text-white' : 'text-white/40'}>{p}</span>
+                    <span className={i <= phase ? 'text-white' : 'text-white/65'}>{p}</span>
                   </li>
                 ))}
               </ol>
             </div>
             <div className="absolute inset-x-3 bottom-3 rounded-lg bg-white/[0.06] p-2 text-center">
-              <p className="text-[7px] text-white/50 uppercase">{m.eta}</p>
+              <p className="text-[7px] text-white/70 uppercase">{m.eta}</p>
               <p className="font-display text-sm font-extrabold">{done ? '✓' : `${minutes} min`}</p>
             </div>
           </div>

@@ -202,7 +202,7 @@ function Fallback({ powered, onPower }: { powered: boolean[]; onPower: (i: numbe
           >
             <PlatformIcon platform={p.platform} size={36} />
             <span className="font-display font-extrabold">{p.name}</span>
-            <span className="font-mono text-[10px] uppercase opacity-80">{powered[i] ? t.lab.on : t.lab.tap}</span>
+            <span className="font-mono text-[10px] uppercase">{powered[i] ? t.lab.on : t.lab.tap}</span>
           </motion.button>
         ))}
       </div>

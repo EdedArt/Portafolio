@@ -18,7 +18,7 @@ export const en: Dict = {
   },
   header: {
     role: 'Software Developer',
-    homeLabel: 'Edgar Arteaga, go to top',
+    homeLabel: 'go to top',
     cv: 'CV',
     cvLabel: 'Download résumé as PDF',
     langLabel: 'Switch language to Spanish',

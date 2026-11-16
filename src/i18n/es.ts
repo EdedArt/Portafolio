@@ -17,7 +17,7 @@ export const es = {
   },
   header: {
     role: 'Software Developer',
-    homeLabel: 'Edgar Arteaga, ir al inicio',
+    homeLabel: 'ir al inicio',
     cv: 'CV',
     cvLabel: 'Descargar hoja de vida en PDF',
     langLabel: 'Cambiar idioma a inglés',
