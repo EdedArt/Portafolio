@@ -6,6 +6,7 @@ import { useI18n } from '../i18n/I18nProvider'
 import { useReducedMotion } from '../lib/hooks'
 import { useTheme } from '../theme/ThemeProvider'
 import { FadeIn, SectionHeading, TiltCard, card } from '../components/ui/motion'
+import { Signature } from '../components/Signature'
 
 export const statusStyle: Record<ToolStatus, string> = {
   production: 'bg-primary/10 text-primary-text border-primary/25',
@@ -78,7 +79,7 @@ export function About() {
                   <p className="kicker mb-4">{t.about.bioTitle}</p>
                   <p className="text-[1.05rem] leading-relaxed text-ink/90">{t.about.bio}</p>
                 </div>
-                <p className="font-serif text-4xl text-primary-text italic md:text-5xl">{t.about.bioClose}</p>
+                <Signature width={210} duration={1.8} className="max-w-full text-primary-text" />
               </article>
             </TiltCard>
           </FadeIn>

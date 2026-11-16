@@ -5,6 +5,7 @@ import { SECTIONS } from '../../lib/nav'
 import { scrollToTop } from '../../lib/scroll'
 import { GithubIcon, LinkedinIcon, Monogram, PlatformIcon } from '../icons'
 import { Magnetic } from '../ui/motion'
+import { Signature } from '../Signature'
 
 export function Footer() {
   const { t, f, l } = useI18n()
@@ -107,7 +108,10 @@ export function Footer() {
       <div className="border-t border-line">
         <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-muted sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
           <p>{f(t.footer.rights)}</p>
-          <p className="font-mono">{t.footer.place}</p>
+          <div className="flex items-center gap-4">
+            <Signature width={130} duration={1.4} className="text-primary-text" />
+            <p className="font-mono">{t.footer.place}</p>
+          </div>
         </div>
       </div>
     </footer>

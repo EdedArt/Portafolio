@@ -3,26 +3,28 @@ import type { ReactNode } from 'react'
 import { ArrowDownRight, Download, Mail, MapPin } from 'lucide-react'
 import { COORDS, CV_URL, EMAIL, GITHUB_URL, LINKEDIN_URL, marquee } from '../data/content'
 import { useI18n } from '../i18n/I18nProvider'
-import { useReducedMotion } from '../lib/hooks'
 import { GithubIcon, LinkedinIcon } from '../components/icons'
+import { Signature } from '../components/Signature'
+import { DecodeLetters, useDecode } from '../components/ui/DecodeText'
 import { Counter, FadeIn, Magnetic, TiltCard, btnGhost, btnPrimary } from '../components/ui/motion'
 
-function AnimatedWord({ word, delay, className }: { word: string; delay: number; className?: string }) {
-  const reduce = useReducedMotion()
+function DecodeName({ label }: { label: string }) {
+  const first = useDecode('EDGAR', { delay: 0.2, duration: 1 })
+  const last = useDecode('ARTEAGA', { delay: 0.35, duration: 1.05 })
   return (
-    <span className={`block whitespace-nowrap ${className ?? ''}`} aria-hidden="true" style={{ perspective: 800 }}>
-      {word.split('').map((ch, i) => (
-        <motion.span
-          key={i}
-          className="inline-block origin-bottom"
-          initial={reduce ? false : { rotateX: -95, y: '35%', opacity: 0 }}
-          animate={{ rotateX: 0, y: '0%', opacity: 1 }}
-          transition={{ duration: 0.9, delay: delay + i * 0.045, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {ch}
-        </motion.span>
-      ))}
-    </span>
+    <h1
+      id="hero-name"
+      aria-label={label}
+      onMouseEnter={() => {
+        first.replay()
+        last.replay()
+      }}
+      className="mt-4 font-display text-[clamp(3.4rem,18vw,6.4rem)] leading-[0.88] font-extrabold tracking-[-0.02em] uppercase lg:text-[clamp(4.6rem,8.2vw,8.2rem)]"
+    >
+      <span className="sr-only">{label}</span>
+      <DecodeLetters text="EDGAR" shown={first.shown} />
+      <DecodeLetters text="ARTEAGA" shown={last.shown} gradient className="pb-[0.06em]" />
+    </h1>
   )
 }
 
@@ -45,16 +47,9 @@ export function Hero() {
             <p className="kicker mt-6">{t.hero.eyebrow}</p>
           </FadeIn>
 
-          <h1
-            id="hero-name"
-            aria-label={t.hero.nameLabel}
-            className="mt-4 font-display text-[clamp(3.1rem,16.5vw,6rem)] leading-[0.88] font-extrabold tracking-[-0.02em] uppercase lg:text-[clamp(4.2rem,7.4vw,7.4rem)]"
-          >
-            <span className="sr-only">{t.hero.nameLabel}</span>
-            <AnimatedWord word="EDGAR" delay={0.15} />
-            <AnimatedWord word="MAURICIO" delay={0.35} className="text-stroke" />
-            <AnimatedWord word="ARTEAGA" delay={0.6} className="text-gradient pb-[0.06em]" />
-          </h1>
+          <DecodeName label={t.hero.nameLabel} />
+          {/* Firma: se dibuja cuando termina la decodificación del nombre */}
+          <Signature trigger="mount" delay={1.45} duration={2} className="mt-3 w-[min(78vw,340px)] text-primary-text" width="100%" />
 
           <FadeIn delay={0.9}>
             <p className="mt-6 max-w-xl font-serif text-2xl leading-snug sm:text-3xl">
@@ -96,12 +91,15 @@ export function Hero() {
           <FadeIn delay={1.2}>
             <dl className="mt-10 grid max-w-md grid-cols-3 gap-4 border-t border-line pt-6">
               {[
-                { n: 4, s: '', label: t.hero.stats.apps },
-                { n: 4, s: '', label: t.hero.stats.platforms },
+                { n: 4, s: '', label: t.hero.stats.platforms, hint: t.hero.stats.platformsHint },
+                { n: 20, s: '+', label: t.hero.stats.tech },
                 { n: 5, s: '.º', label: t.hero.stats.semester },
               ].map((st) => (
                 <div key={st.label} className="flex flex-col-reverse">
-                  <dt className="mt-1 text-xs text-muted sm:text-sm">{st.label}</dt>
+                  <dt className="mt-1 text-xs text-muted sm:text-sm" title={st.hint}>
+                    {st.label}
+                    {st.hint && <span className="sr-only">: {st.hint}</span>}
+                  </dt>
                   <dd className="font-display text-4xl font-extrabold sm:text-5xl">
                     <Counter to={st.n} suffix={st.s} />
                   </dd>
@@ -137,7 +135,10 @@ export function Hero() {
                       <MapPin size={16} aria-hidden="true" /> Pasto, CO
                     </p>
                   </div>
-                  <p className="font-mono text-[11px] opacity-80">{COORDS}</p>
+                  <div className="flex flex-col items-end gap-1">
+                    <Signature trigger="mount" delay={3.3} duration={1.6} width={118} color="#fff" className="opacity-90" />
+                    <p className="font-mono text-[11px] opacity-80">{COORDS}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -149,8 +150,8 @@ export function Hero() {
             <Badge className="top-[38%] right-0 sm:-right-6 lg:right-0 xl:-right-10" z={110} delay={1.2}>
               <span className="text-lg" aria-hidden="true">⚽</span>
               <span className="leading-tight">
-                <span className="block font-mono text-[10px] tracking-wider text-muted uppercase">{t.hero.badgePassionLabel}</span>
-                <span className="block text-xs font-semibold">{t.hero.badgePassion}</span>
+                <span className="block font-mono text-[10px] tracking-wider text-muted uppercase">{t.hero.badgeFootballLabel}</span>
+                <span className="block text-xs font-semibold">{t.hero.badgeFootball}</span>
               </span>
             </Badge>
             <Badge className="bottom-20 -left-1 sm:-left-8 xl:-left-12" z={90} delay={2.1}>

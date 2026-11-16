@@ -5,6 +5,7 @@ import { EMAIL, FORMSUBMIT_URL, GITHUB_URL, GMAIL_COMPOSE_URL, LINKEDIN_URL } fr
 import { useI18n } from '../i18n/I18nProvider'
 import { GithubIcon, LinkedinIcon } from '../components/icons'
 import { FadeIn, Magnetic, SectionHeading, TiltCard, btnGhost, btnPrimary, card } from '../components/ui/motion'
+import { Signature } from '../components/Signature'
 
 type Status = 'idle' | 'sending' | 'success' | 'error'
 type Field = 'name' | 'email' | 'message'
@@ -103,6 +104,7 @@ export function Contact() {
     <section id="contacto" aria-labelledby="contact-title" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading id="contact-title" kicker={c.kicker} title={c.title} accent={c.titleAccent} />
+        <Signature width={190} duration={1.6} className="-mt-6 mb-10 max-w-full text-primary-text md:-mt-8 md:mb-12" />
 
         <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
           {/* Izquierda */}
