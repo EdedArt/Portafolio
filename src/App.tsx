@@ -1,17 +1,18 @@
 import { Background } from './components/layout/Background'
 import { Cursor } from './components/layout/Cursor'
+import { Footer } from './components/layout/Footer'
 import { Header } from './components/layout/Header'
 import { ScrollProgress } from './components/layout/ScrollProgress'
 import { useI18n } from './i18n/I18nProvider'
-import { SECTIONS } from './lib/nav'
 import { SmoothScroll } from './lib/scroll'
-import { Hero } from './sections/Hero'
 import { About } from './sections/About'
-import { Projects } from './sections/Projects'
+import { Contact } from './sections/Contact'
+import { Hero } from './sections/Hero'
 import { Lab } from './sections/Lab'
+import { Projects } from './sections/Projects'
+import { Skills } from './sections/Skills'
 import { Testimonials } from './sections/Testimonials'
 import { Timeline } from './sections/Timeline'
-import { Skills } from './sections/Skills'
 
 export default function App() {
   const { t } = useI18n()
@@ -35,12 +36,9 @@ export default function App() {
         <Testimonials />
         <Timeline />
         <Skills />
-        {SECTIONS.filter((s) => !['inicio', 'sobre-mi', 'proyectos', 'lab', 'referencias', 'trayectoria', 'habilidades'].includes(s.id)).map((s) => (
-          <section key={s.id} id={s.id} className="grid min-h-screen place-items-center">
-            <h2 className="font-display text-6xl font-extrabold uppercase">{t.nav[s.key]}</h2>
-          </section>
-        ))}
+        <Contact />
       </main>
+      <Footer />
     </SmoothScroll>
   )
 }
