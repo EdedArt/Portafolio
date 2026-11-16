@@ -119,6 +119,8 @@ export const es = {
     details: 'Ver detalles',
     code: 'Código',
     codeBackend: 'Código backend',
+    moreTitle: 'Más proyectos',
+    moreSubtitle: 'Lo que estoy construyendo ahora.',
     newTab: '(abre en una pestaña nueva)',
     modal: {
       close: 'Cerrar detalles',

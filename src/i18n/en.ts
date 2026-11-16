@@ -119,6 +119,8 @@ export const en: Dict = {
     details: 'See details',
     code: 'Code',
     codeBackend: 'Backend code',
+    moreTitle: 'More projects',
+    moreSubtitle: "What I'm building right now.",
     newTab: '(opens in a new tab)',
     modal: {
       close: 'Close details',

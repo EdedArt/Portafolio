@@ -383,12 +383,32 @@ export const projects: Project[] = [
   },
 ]
 
+/* ───────────── Más proyectos (tarjetas pequeñas bajo los destacados) ─────────────
+ * Si `repo` queda vacío, el botón de código no se muestra.
+ */
+export interface MoreProject {
+  name: string
+  status: L
+  description: L
+  tech: string[]
+  repo: string
+}
+
+export const moreProjects: MoreProject[] = [
+  {
+    name: 'PetCare',
+    status: { es: 'En desarrollo', en: 'In development' },
+    description: {
+      es: 'Plataforma de gestión de mascotas: historial de salud, vacunas y citas de cada mascota.',
+      en: 'Pet management platform: health history, vaccines and appointments for each pet.',
+    },
+    tech: ['NestJS', 'TypeScript', 'PostgreSQL'],
+    repo: '',
+  },
+]
+
 /* ───────────── Testimonios ─────────────
- * Mientras `borrador` sea true, la tarjeta muestra la etiqueta “Borrador”
- * y en lugar del nombre se muestra el rol. Cuando tengas el testimonio real:
- * 1) cambia `texto` por las palabras reales,
- * 2) llena `nombre` (y `iniciales`),
- * 3) pon `borrador: false`.
+ * Con `borrador: true` la tarjeta muestra la etiqueta “Borrador” y el rol en lugar del nombre.
  */
 export interface Testimonial {
   borrador: boolean
@@ -401,34 +421,37 @@ export interface Testimonial {
 
 export const testimonials: Testimonial[] = [
   {
-    borrador: true,
-    iniciales: 'PP',
-    rol: { es: 'Compañero de equipo · Plomo y Paja', en: 'Teammate · Plomo y Paja' },
+    borrador: false,
+    nombre: 'Iván Ramírez',
+    iniciales: 'IR',
+    rol: { es: 'Desarrollador de software · Mentor', en: 'Software developer · Mentor' },
     texto: {
-      es: 'Edgar se encargó del arte, los enemigos y las pistas del juego. Siempre entregó a tiempo y, cuando algo no encajaba con la historia, proponía cambios en lugar de esperar instrucciones.',
-      en: "Edgar handled the game's art, enemies and clues. He always delivered on time and, when something didn't fit the story, he proposed changes instead of waiting for instructions.",
+      es: 'Edgar entiende el problema antes de escribir código. Descompone bien los requisitos y detecta los casos borde antes de que lleguen a producción. Escribe código legible y piensa en acoplamiento y cohesión, no solo en que funcione. En equipo es directo y argumenta su feedback. Es de los desarrolladores que uno quiere en un proyecto serio.',
+      en: "Edgar understands the problem before he writes any code. He breaks requirements down well and catches edge cases before they reach production. He writes readable code and thinks about coupling and cohesion, not just about making it work. On a team he's direct and backs up his feedback. He's the kind of developer you want on a serious project.",
     },
-    hashtags: ['#Arte2D', '#TrabajoEnEquipo', '#Responsable'],
+    hashtags: ['#CódigoLimpio', '#Arquitectura', '#TrabajoEnEquipo'],
   },
   {
-    borrador: true,
-    iniciales: 'DI',
-    rol: { es: 'Docente · Diseño de Interfaces de Software', en: 'Professor · Software Interface Design' },
+    borrador: false,
+    nombre: 'Andrea Arciniegas',
+    iniciales: 'AA',
+    rol: { es: 'Pasión Nariño · Agencia de viajes', en: 'Pasión Nariño · Travel agency' },
     texto: {
-      es: 'Sus entregas cuidan los detalles de la interfaz: tema claro y oscuro, dos idiomas y buena accesibilidad. Llevó un mismo proyecto del navegador hasta un reloj real.',
-      en: 'His work takes care of interface details: light and dark themes, two languages and good accessibility. He took the same project from the browser all the way to a real watch.',
+      es: 'Su mayor talento es concebir y llevar de punta a punta sistemas complejos, uniendo un frontend moderno con Next.js y React con un backend sólido en NestJS y PostgreSQL. Logra que la inteligencia artificial deje de ser un experimento y se convierta en una función real dentro de productos que funcionan.',
+      en: 'His greatest strength is designing complex systems and carrying them end to end, pairing a modern Next.js and React frontend with a solid NestJS and PostgreSQL backend. He turns artificial intelligence from an experiment into a real feature inside products that work.',
     },
-    hashtags: ['#UI', '#Accesibilidad', '#Multiplataforma'],
+    hashtags: ['#FullStack', '#NestJS', '#IAAplicada'],
   },
   {
-    borrador: true,
-    iniciales: 'UC',
-    rol: { es: 'Compañero de clase · UCC Pasto', en: 'Classmate · UCC Pasto' },
+    borrador: false,
+    nombre: 'Osvaldo Martínez',
+    iniciales: 'OM',
+    rol: { es: 'Proyectos de software para droguería', en: 'Software projects for a drugstore' },
     texto: {
-      es: 'Es de los que explican con paciencia y comparten lo que aprenden. Cuando el grupo se trababa con algo técnico, Edgar buscaba la forma de resolverlo y nos la enseñaba.',
-      en: "He's one of those who explain patiently and share what they learn. When the group got stuck on something technical, Edgar found a way to solve it and taught it to us.",
+      es: 'Edgar es exigente con los resultados y curioso a nivel técnico. No se queda en programar: le interesan la arquitectura, la estructura y la organización de los proyectos, y tiene buena base en análisis de requisitos y diseño de software. Su fortaleza es que busca entender cómo funcionan las cosas, no solo hacer que funcionen.',
+      en: "Edgar is demanding about results and technically curious. He doesn't stop at writing code: he cares about the architecture, structure and organization of a project, and he has a solid grounding in requirements analysis and software design. His strength is that he wants to understand how things work, not just make them work.",
     },
-    hashtags: ['#Colaboración', '#Aprendizaje', '#Compromiso'],
+    hashtags: ['#Requisitos', '#DiseñoDeSoftware', '#Curiosidad'],
   },
 ]
 

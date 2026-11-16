@@ -1,12 +1,12 @@
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
 import { ArrowUpRight, Download, Info } from 'lucide-react'
 import { useState } from 'react'
-import { projects, type Platform, type Project } from '../data/content'
+import { moreProjects, projects, type Platform, type Project } from '../data/content'
 import { useI18n } from '../i18n/I18nProvider'
 import { GithubIcon, PlatformIcon } from '../components/icons'
 import { ProjectMockup } from '../components/mockups/ProjectMockup'
 import { ProjectModal } from '../components/ProjectModal'
-import { Magnetic, SectionHeading, TiltCard, btnGhost, btnPrimary } from '../components/ui/motion'
+import { FadeIn, Magnetic, SectionHeading, TiltCard, btnGhost, btnPrimary, card } from '../components/ui/motion'
 
 type Filter = 'all' | Platform
 const FILTERS: Filter[] = ['all', 'desktop', 'mobile', 'watch', 'game']
@@ -137,6 +137,51 @@ export function Projects() {
             })}
           </AnimatePresence>
         </motion.ul>
+
+        {/* Más proyectos */}
+        {moreProjects.length > 0 && (
+          <div className="mt-20 md:mt-24">
+            <FadeIn>
+              <h3 className="font-display text-2xl font-extrabold tracking-tight uppercase md:text-3xl">{t.projects.moreTitle}</h3>
+              <p className="mt-1 text-muted">{t.projects.moreSubtitle}</p>
+            </FadeIn>
+            <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {moreProjects.map((mp, i) => (
+                <li key={mp.name} className="h-full">
+                  <FadeIn delay={i * 0.08} className="h-full">
+                    <TiltCard max={8} className="h-full" innerClassName="rounded-3xl">
+                      <article className={`${card} flex h-full flex-col p-6`}>
+                        <div className="flex items-center justify-between gap-3">
+                          <h4 className="font-display text-2xl font-extrabold">{mp.name}</h4>
+                          <span className="flex shrink-0 items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 font-mono text-[11px] text-primary-text">
+                            <span className="size-1.5 animate-pulse-dot rounded-full bg-primary" aria-hidden="true" />
+                            {l(mp.status)}
+                          </span>
+                        </div>
+                        <p className="mt-3 leading-relaxed text-muted">{l(mp.description)}</p>
+                        <ul className="mt-5 flex flex-wrap gap-1.5" aria-label={t.projects.modal.tech}>
+                          {mp.tech.map((tech) => (
+                            <li key={tech} className="rounded-full border border-line-strong px-2.5 py-1 font-mono text-[11px]">
+                              {tech}
+                            </li>
+                          ))}
+                        </ul>
+                        {mp.repo && (
+                          <a href={mp.repo} target="_blank" rel="noopener noreferrer" className={`${btnGhost} mt-6 self-start`}>
+                            <GithubIcon size={16} />
+                            {t.projects.code}
+                            <ArrowUpRight size={14} aria-hidden="true" />
+                            <span className="sr-only"> {mp.name} {t.projects.newTab}</span>
+                          </a>
+                        )}
+                      </article>
+                    </TiltCard>
+                  </FadeIn>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       <ProjectModal project={open} onClose={() => setOpen(null)} />
