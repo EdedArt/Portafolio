@@ -8,6 +8,7 @@ import { SmoothScroll } from './lib/scroll'
 import { Hero } from './sections/Hero'
 import { About } from './sections/About'
 import { Projects } from './sections/Projects'
+import { Lab } from './sections/Lab'
 
 export default function App() {
   const { t } = useI18n()
@@ -27,7 +28,8 @@ export default function App() {
         <Hero />
         <About />
         <Projects />
-        {SECTIONS.filter((s) => !['inicio', 'sobre-mi', 'proyectos'].includes(s.id)).map((s) => (
+        <Lab />
+        {SECTIONS.filter((s) => !['inicio', 'sobre-mi', 'proyectos', 'lab'].includes(s.id)).map((s) => (
           <section key={s.id} id={s.id} className="grid min-h-screen place-items-center">
             <h2 className="font-display text-6xl font-extrabold uppercase">{t.nav[s.key]}</h2>
           </section>
