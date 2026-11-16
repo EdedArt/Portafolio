@@ -155,7 +155,7 @@ export const en: Dict = {
     kicker: '03 — Interactive',
     title: 'MY ECOSYSTEM',
     titleAccent: 'in 3D',
-    subtitle: 'Four devices, four projects. Spin the carousel and tap each one to power it on.',
+    subtitle: 'Spin the carousel and tap each device to power it on and see its project.',
     powered: 'Platforms powered on',
     autoRotate: 'Auto-rotate',
     autoRotateOn: 'Pause auto-rotate',

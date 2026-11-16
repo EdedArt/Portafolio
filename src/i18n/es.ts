@@ -156,7 +156,7 @@ export const es = {
     title: 'MI ECOSISTEMA',
     titleAccent: 'en 3D',
     subtitle:
-      'Cuatro dispositivos, cuatro proyectos. Gira el carrusel y toca cada uno para encenderlo.',
+      'Gira el carrusel y toca cada dispositivo para encenderlo y ver su proyecto.',
     powered: 'Plataformas encendidas',
     autoRotate: 'Giro automático',
     autoRotateOn: 'Pausar giro automático',
