@@ -27,6 +27,8 @@ export function Lab() {
   const reduce = useReducedMotion()
   const panelRef = useRef<HTMLDivElement>(null)
   const near = useInView(panelRef, { once: true, margin: '400px 0px' })
+  // Pausa el render 3D cuando el panel no está en pantalla
+  const visible = useInView(panelRef, { margin: '100px 0px' })
   const [webgl] = useState(() => hasWebGL())
   const [powered, setPowered] = useState<boolean[]>(() => devices.map(() => false))
   const [selected, setSelected] = useState(0)
@@ -102,6 +104,7 @@ export function Lab() {
                     onInteract={interact}
                     onView={view}
                     mobile={mobile}
+                    active={visible}
                   />
                 </Suspense>
               )}

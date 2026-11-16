@@ -145,7 +145,8 @@ export function Header() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -12, scale: 0.98 }}
             transition={{ duration: 0.22 }}
-            className="glass mx-auto mt-2 max-h-[calc(100dvh-6rem)] max-w-7xl overflow-y-auto rounded-3xl p-3 shadow-soft lg:hidden"
+            data-lenis-prevent
+            className="mx-auto mt-2 max-h-[calc(100dvh-6rem)] max-w-7xl overflow-y-auto rounded-3xl border border-line bg-surface/95 p-3 shadow-soft backdrop-blur-xl lg:hidden"
           >
             <ul className="grid gap-1 sm:grid-cols-2">
               {SECTIONS.map((s, i) => (

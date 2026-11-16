@@ -146,14 +146,14 @@ export function Hero() {
             <Badge className="-top-4 -left-1 sm:-left-8" z={70} delay={0}>
               <span className="font-mono text-[11px] font-medium tracking-wider text-primary-text">{f(t.hero.badgeUcc)}</span>
             </Badge>
-            <Badge className="top-[38%] -right-1 sm:-right-10" z={110} delay={1.2}>
+            <Badge className="top-[38%] right-0 sm:-right-6 xl:-right-10" z={110} delay={1.2}>
               <span className="text-lg" aria-hidden="true">⚽</span>
               <span className="leading-tight">
                 <span className="block font-mono text-[10px] tracking-wider text-muted uppercase">{t.hero.badgePassionLabel}</span>
                 <span className="block text-xs font-semibold">{t.hero.badgePassion}</span>
               </span>
             </Badge>
-            <Badge className="bottom-20 -left-1 sm:-left-12" z={90} delay={2.1}>
+            <Badge className="bottom-20 -left-1 sm:-left-8 xl:-left-12" z={90} delay={2.1}>
               <span className="text-lg" aria-hidden="true">⌚</span>
               <span className="leading-tight">
                 <span className="block font-mono text-[10px] tracking-wider text-muted uppercase">{t.hero.badgeGarminLabel}</span>

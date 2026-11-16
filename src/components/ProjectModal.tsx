@@ -70,15 +70,17 @@ export function ProjectModal({ project, onClose }: { project: Project | null; on
             transition={{ type: 'spring', stiffness: 260, damping: 28 }}
             style={{ transformPerspective: 1200 }}
           >
-            <button
-              ref={closeRef}
-              type="button"
-              onClick={onClose}
-              aria-label={m.close}
-              className="sticky top-4 z-20 float-right mt-4 mr-4 grid size-11 place-items-center rounded-full bg-black/60 text-white backdrop-blur transition-colors hover:bg-primary"
-            >
-              <X size={20} aria-hidden="true" />
-            </button>
+            <div className="sticky top-0 z-20 flex h-0 justify-end">
+              <button
+                ref={closeRef}
+                type="button"
+                onClick={onClose}
+                aria-label={m.close}
+                className="mt-4 mr-4 grid size-11 shrink-0 place-items-center rounded-full bg-black/60 text-white backdrop-blur transition-colors hover:bg-primary"
+              >
+                <X size={20} aria-hidden="true" />
+              </button>
+            </div>
 
             <div className="relative h-[260px] overflow-hidden bg-gradient-to-br from-[#2a0a10] via-[#170c10] to-[#0d0809] sm:h-[340px]">
               <ProjectMockup id={project.id} name={project.name} className="size-full" />

@@ -356,8 +356,8 @@ function Carousel(props: LabSceneProps & { dragRef: RefObject<DragState> }) {
   )
 }
 
-export default function LabScene(props: LabSceneProps & { mobile: boolean }) {
-  const { mobile, light, onInteract } = props
+export default function LabScene(props: LabSceneProps & { mobile: boolean; active: boolean }) {
+  const { mobile, light, onInteract, active } = props
   const dragRef = useRef<DragState>({ dragging: false, vel: 0, dx: 0, moved: 0 })
   const lastX = useRef(0)
 
@@ -386,6 +386,7 @@ export default function LabScene(props: LabSceneProps & { mobile: boolean }) {
         dpr={mobile ? [1, 1.5] : [1, 2]}
         camera={{ position: [0, 1.3, 6.4], fov: mobile ? 56 : 42 }}
         gl={{ antialias: !mobile, alpha: true, powerPreference: 'high-performance' }}
+        frameloop={active ? 'always' : 'never'}
         onCreated={({ camera }) => camera.lookAt(0, 0.2, 0)}
       >
         <ambientLight intensity={light ? 1 : 0.75} />
