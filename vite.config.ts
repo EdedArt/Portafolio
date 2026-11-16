@@ -6,15 +6,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
     target: 'es2022',
-    chunkSizeWarningLimit: 1200,
-    rollupOptions: {
-      output: {
-        manualChunks(id: string) {
-          if (id.includes('node_modules/three')) return 'three'
-          if (id.includes('@react-three')) return 'r3f'
-          if (id.includes('framer-motion') || id.includes('motion-dom')) return 'motion'
-        },
-      },
-    },
+    // Three.js se carga en un chunk diferido (fondo y Lab 3D); su tamaño es esperado.
+    chunkSizeWarningLimit: 1100,
   },
 })
