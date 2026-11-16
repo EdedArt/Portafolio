@@ -209,8 +209,7 @@ export const projects: Project[] = [
       'Gemini Vision',
     ],
     installer: {
-      file: 'AutoClean AI (.apk)',
-      version: 'EAS Build',
+      file: 'AutoClean AI (.apk · EAS Build)',
       steps: {
         es: [
           'Descarga el archivo .apk en tu celular.',

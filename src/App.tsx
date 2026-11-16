@@ -7,6 +7,7 @@ import { SECTIONS } from './lib/nav'
 import { SmoothScroll } from './lib/scroll'
 import { Hero } from './sections/Hero'
 import { About } from './sections/About'
+import { Projects } from './sections/Projects'
 
 export default function App() {
   const { t } = useI18n()
@@ -25,7 +26,8 @@ export default function App() {
       <main id="contenido" className="overflow-x-clip">
         <Hero />
         <About />
-        {SECTIONS.filter((s) => s.id !== 'inicio' && s.id !== 'sobre-mi').map((s) => (
+        <Projects />
+        {SECTIONS.filter((s) => !['inicio', 'sobre-mi', 'proyectos'].includes(s.id)).map((s) => (
           <section key={s.id} id={s.id} className="grid min-h-screen place-items-center">
             <h2 className="font-display text-6xl font-extrabold uppercase">{t.nav[s.key]}</h2>
           </section>
