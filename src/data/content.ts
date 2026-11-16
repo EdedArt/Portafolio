@@ -11,7 +11,7 @@ import type { L, LList } from '../i18n/I18nProvider'
 export const EMAIL = 'edgar20arteaga06@gmail.com'
 export const GITHUB_URL = 'https://github.com/EdedArt'
 /** Pega aquí tu perfil de LinkedIn. Si queda vacío, el ícono se oculta. */
-export const LINKEDIN_URL = ''
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/edgar-arteaga-267606368/'
 export const CV_URL = '/CV_Edgar_Arteaga.pdf'
 export const COORDS = '1.21° N · 77.28° W'
 export const GMAIL_COMPOSE_URL = `https://mail.google.com/mail/?view=cm&fs=1&to=${EMAIL}`
