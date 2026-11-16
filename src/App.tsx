@@ -5,6 +5,7 @@ import { ScrollProgress } from './components/layout/ScrollProgress'
 import { useI18n } from './i18n/I18nProvider'
 import { SECTIONS } from './lib/nav'
 import { SmoothScroll } from './lib/scroll'
+import { Hero } from './sections/Hero'
 
 export default function App() {
   const { t } = useI18n()
@@ -20,8 +21,9 @@ export default function App() {
       <ScrollProgress />
       <Cursor />
       <Header />
-      <main id="contenido">
-        {SECTIONS.map((s) => (
+      <main id="contenido" className="overflow-x-clip">
+        <Hero />
+        {SECTIONS.filter((s) => s.id !== 'inicio').map((s) => (
           <section key={s.id} id={s.id} className="grid min-h-screen place-items-center">
             <h2 className="font-display text-6xl font-extrabold uppercase">{t.nav[s.key]}</h2>
           </section>

@@ -63,16 +63,17 @@ html {
   color: var(--text);
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: 96px;
+  overflow-x: clip;
 }
 
 body {
-  background: var(--bg);
+  /* Sin fondo propio: el de <html> deja ver las capas fijas con z-index negativo */
   color: var(--text);
   font-family: var(--font-sans);
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: color 0.4s ease;
 }
 
 ::selection {
